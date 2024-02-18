@@ -78,9 +78,11 @@ public class formEnvoie extends javax.swing.JInternalFrame {
         btnImprimer = new javax.swing.JButton();
 
         tablepamel.setBackground(new java.awt.Color(0, 0, 51));
+        tablepamel.setForeground(new java.awt.Color(255, 255, 255));
         tablepamel.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
         tablepamel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tablepamel.setFont(new java.awt.Font("Hack", 1, 16)); // NOI18N
+        tablepamel.setOpaque(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 

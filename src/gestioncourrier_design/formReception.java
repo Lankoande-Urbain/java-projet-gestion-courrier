@@ -71,6 +71,7 @@ public class formReception extends javax.swing.JInternalFrame {
         jTabbedPane1.setBackground(new java.awt.Color(0, 0, 51));
         jTabbedPane1.setForeground(new java.awt.Color(255, 255, 255));
         jTabbedPane1.setFont(new java.awt.Font("Hack", 1, 16)); // NOI18N
+        jTabbedPane1.setOpaque(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -348,14 +349,9 @@ public class formReception extends javax.swing.JInternalFrame {
 
         jTabbedPane1.addTab("Enregistrement de la recuperation d'un courrier", jPanel1);
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-
         tableCourrierRecuperer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "Num courrier", "nature ", "Date envoie", "Date recuperation", "Expediteur", "Recuperateur"
