@@ -62,10 +62,10 @@ public class formMain extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(0, 0, 51));
 
         jLabel2.setFont(new java.awt.Font("Hack", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 51));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/entrepot2.png"))); // NOI18N
         jLabel2.setText("Transport");
@@ -80,9 +80,9 @@ public class formMain extends javax.swing.JFrame {
         });
 
         btnenvoie.setFont(new java.awt.Font("Hack", 1, 22)); // NOI18N
-        btnenvoie.setForeground(new java.awt.Color(0, 0, 51));
+        btnenvoie.setForeground(new java.awt.Color(255, 255, 255));
         btnenvoie.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnenvoie.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/colis-bleu.png"))); // NOI18N
+        btnenvoie.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/colis-blanc.png"))); // NOI18N
         btnenvoie.setText("Envoie colis");
         btnenvoie.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnenvoie.setFocusTraversalPolicyProvider(true);
@@ -93,9 +93,9 @@ public class formMain extends javax.swing.JFrame {
         });
 
         btnreception.setFont(new java.awt.Font("Hack", 1, 22)); // NOI18N
-        btnreception.setForeground(new java.awt.Color(0, 0, 51));
+        btnreception.setForeground(new java.awt.Color(255, 255, 255));
         btnreception.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        btnreception.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/paquet-bleu.png"))); // NOI18N
+        btnreception.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/paquet-blanc.png"))); // NOI18N
         btnreception.setText("Reception de colis");
         btnreception.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnreception.setFocusTraversalPolicyProvider(true);
@@ -106,34 +106,34 @@ public class formMain extends javax.swing.JFrame {
         });
 
         tnadmin.setFont(new java.awt.Font("Hack", 1, 22)); // NOI18N
-        tnadmin.setForeground(new java.awt.Color(0, 0, 51));
+        tnadmin.setForeground(new java.awt.Color(255, 255, 255));
         tnadmin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tnadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/setting-bleu.png"))); // NOI18N
+        tnadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/setting-blanc.png"))); // NOI18N
         tnadmin.setText("Administration");
         tnadmin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tnadmin.setFocusTraversalPolicyProvider(true);
 
         jLabel6.setFont(new java.awt.Font("Hack", 1, 22)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 51));
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Envoie colis");
         jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabel6.setFocusTraversalPolicyProvider(true);
 
-        jSeparator1.setBackground(new java.awt.Color(0, 0, 51));
-        jSeparator1.setForeground(new java.awt.Color(0, 0, 51));
+        jSeparator1.setBackground(new java.awt.Color(255, 255, 255));
+        jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator1.setFont(new java.awt.Font("Cantarell", 2, 36)); // NOI18N
 
         jSeparator2.setBackground(new java.awt.Color(0, 0, 51));
-        jSeparator2.setForeground(new java.awt.Color(0, 0, 51));
+        jSeparator2.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator2.setFont(new java.awt.Font("Cantarell", 2, 36)); // NOI18N
 
         jSeparator3.setBackground(new java.awt.Color(0, 0, 51));
-        jSeparator3.setForeground(new java.awt.Color(0, 0, 51));
+        jSeparator3.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator3.setFont(new java.awt.Font("Cantarell", 2, 36)); // NOI18N
 
         jSeparator4.setBackground(new java.awt.Color(0, 0, 51));
-        jSeparator4.setForeground(new java.awt.Color(0, 0, 51));
+        jSeparator4.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator4.setFont(new java.awt.Font("Cantarell", 2, 36)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

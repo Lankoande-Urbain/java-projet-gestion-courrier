@@ -67,7 +67,20 @@ public class formEnvoie extends javax.swing.JInternalFrame {
         btnValider = new javax.swing.JButton();
         btnAnnuler = new javax.swing.JButton();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jLabel19 = new javax.swing.JLabel();
+        txtDestination = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableCourrier = new javax.swing.JTable();
+        btnSupprimer = new javax.swing.JButton();
+        btnModifier = new javax.swing.JButton();
+        btnActualiser = new javax.swing.JButton();
+        btnImprimer = new javax.swing.JButton();
+
+        tablepamel.setBackground(new java.awt.Color(0, 0, 51));
+        tablepamel.setTabLayoutPolicy(javax.swing.JTabbedPane.SCROLL_TAB_LAYOUT);
+        tablepamel.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tablepamel.setFont(new java.awt.Font("Hack", 1, 16)); // NOI18N
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -127,21 +140,21 @@ public class formEnvoie extends javax.swing.JInternalFrame {
 
         jLabel8.setFont(new java.awt.Font("Hack", 1, 16)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel8.setText("Prenom:");
+        jLabel8.setText("Nom:");
 
         txtPrenom1.setFont(new java.awt.Font("Hack", 2, 13)); // NOI18N
         txtPrenom1.setForeground(new java.awt.Color(51, 51, 51));
 
         jLabel9.setFont(new java.awt.Font("Hack", 1, 16)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel9.setText("Telephone:");
+        jLabel9.setText("Prenom:");
 
         txtPhone1.setFont(new java.awt.Font("Hack", 2, 13)); // NOI18N
         txtPhone1.setForeground(new java.awt.Color(51, 51, 51));
 
         jLabel10.setFont(new java.awt.Font("Hack", 1, 16)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel10.setText("Num piece:");
+        jLabel10.setText("Telephone:");
 
         txtNumPiece1.setFont(new java.awt.Font("Hack", 2, 13)); // NOI18N
         txtNumPiece1.setForeground(new java.awt.Color(51, 51, 51));
@@ -211,6 +224,13 @@ public class formEnvoie extends javax.swing.JInternalFrame {
         jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
         jFormattedTextField1.setFont(new java.awt.Font("Hack", 2, 14)); // NOI18N
 
+        jLabel19.setFont(new java.awt.Font("Hack", 1, 16)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel19.setText("Destination:");
+
+        txtDestination.setFont(new java.awt.Font("Hack", 2, 13)); // NOI18N
+        txtDestination.setForeground(new java.awt.Color(51, 51, 51));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -277,7 +297,8 @@ public class formEnvoie extends javax.swing.JInternalFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel13)
-                                    .addComponent(jLabel15))
+                                    .addComponent(jLabel15)
+                                    .addComponent(jLabel19))
                                 .addGap(15, 15, 15)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -291,7 +312,8 @@ public class formEnvoie extends javax.swing.JInternalFrame {
                                         .addGap(25, 25, 25)
                                         .addComponent(jLabel14)
                                         .addGap(15, 15, 15)
-                                        .addComponent(txtNature, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(txtNature, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtDestination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(25, 25, 25)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -313,7 +335,7 @@ public class formEnvoie extends javax.swing.JInternalFrame {
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel10, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6, jLabel7, jLabel8, jLabel9});
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cmbTypePiece, txtDescrip, txtEmail, txtNature, txtNom, txtNumPiece, txtNumPiece1, txtPhone, txtPhone1, txtPrenom, txtPrenom1, txtPrixEst, txtPrixFac, txtnumCourrier});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cmbTypePiece, txtDescrip, txtDestination, txtEmail, txtNature, txtNom, txtNumPiece, txtNumPiece1, txtPhone, txtPhone1, txtPrenom, txtPrenom1, txtPrixEst, txtPrixFac, txtnumCourrier});
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel13, jLabel14, jLabel15, jLabel16, jLabel17, jLabel18});
 
@@ -389,7 +411,11 @@ public class formEnvoie extends javax.swing.JInternalFrame {
                     .addComponent(jLabel18)
                     .addComponent(txtPrixFac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel19)
+                    .addComponent(txtDestination, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAnnuler)
                     .addComponent(btnValider, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -398,7 +424,7 @@ public class formEnvoie extends javax.swing.JInternalFrame {
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel10, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6, jLabel7, jLabel8, jLabel9});
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtDescrip, txtEmail, txtNature, txtNom, txtNumPiece, txtNumPiece1, txtPhone, txtPhone1, txtPrenom, txtPrenom1, txtPrixEst, txtPrixFac, txtnumCourrier});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtDescrip, txtDestination, txtEmail, txtNature, txtNom, txtNumPiece, txtNumPiece1, txtPhone, txtPhone1, txtPrenom, txtPrenom1, txtPrixEst, txtPrixFac, txtnumCourrier});
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel13, jLabel14, jLabel15, jLabel16, jLabel17, jLabel18});
 
@@ -406,16 +432,111 @@ public class formEnvoie extends javax.swing.JInternalFrame {
 
         tablepamel.addTab("Enregistrer de courrier a envoyer", jPanel1);
 
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setFont(new java.awt.Font("Hack", 2, 14)); // NOI18N
+
+        tableCourrier.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Num Courrier", "Nature", "Date", "prix", "Expediteur", "Destinateur", "Destination", "Status"
+            }
+        ));
+        jScrollPane1.setViewportView(tableCourrier);
+
+        btnSupprimer.setBackground(new java.awt.Color(0, 0, 51));
+        btnSupprimer.setFont(new java.awt.Font("Hack", 1, 18)); // NOI18N
+        btnSupprimer.setForeground(new java.awt.Color(255, 255, 255));
+        btnSupprimer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/delete-blanc.png"))); // NOI18N
+        btnSupprimer.setText("Supprimer");
+        btnSupprimer.setEnabled(false);
+        btnSupprimer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSupprimerMouseClicked(evt);
+            }
+        });
+
+        btnModifier.setBackground(new java.awt.Color(0, 0, 51));
+        btnModifier.setFont(new java.awt.Font("Hack", 1, 18)); // NOI18N
+        btnModifier.setForeground(new java.awt.Color(255, 255, 255));
+        btnModifier.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/update-blanc.png"))); // NOI18N
+        btnModifier.setText("Modifier");
+        btnModifier.setEnabled(false);
+        btnModifier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModifierMouseClicked(evt);
+            }
+        });
+        btnModifier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModifierActionPerformed(evt);
+            }
+        });
+
+        btnActualiser.setBackground(new java.awt.Color(0, 0, 51));
+        btnActualiser.setFont(new java.awt.Font("Hack", 1, 18)); // NOI18N
+        btnActualiser.setForeground(new java.awt.Color(255, 255, 255));
+        btnActualiser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/actualiser-blanc.png"))); // NOI18N
+        btnActualiser.setText("Actualiser");
+        btnActualiser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnActualiserMouseClicked(evt);
+            }
+        });
+        btnActualiser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualiserActionPerformed(evt);
+            }
+        });
+
+        btnImprimer.setBackground(new java.awt.Color(0, 0, 51));
+        btnImprimer.setFont(new java.awt.Font("Hack", 1, 18)); // NOI18N
+        btnImprimer.setForeground(new java.awt.Color(255, 255, 255));
+        btnImprimer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/imprimante-blanc.png"))); // NOI18N
+        btnImprimer.setText("Imprimer");
+        btnImprimer.setEnabled(false);
+        btnImprimer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1119, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(108, 108, 108)
+                .addComponent(btnSupprimer)
+                .addGap(55, 55, 55)
+                .addComponent(btnModifier)
+                .addGap(55, 55, 55)
+                .addComponent(btnActualiser)
+                .addGap(55, 55, 55)
+                .addComponent(btnImprimer)
+                .addGap(120, 174, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnActualiser, btnImprimer, btnModifier, btnSupprimer});
+
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 628, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnModifier)
+                    .addComponent(btnSupprimer)
+                    .addComponent(btnActualiser)
+                    .addComponent(btnImprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28))
         );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnActualiser, btnImprimer, btnModifier, btnSupprimer});
 
         tablepamel.addTab("Liste des courriers envoyer", jPanel2);
 
@@ -425,7 +546,7 @@ public class formEnvoie extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(tablepamel, javax.swing.GroupLayout.PREFERRED_SIZE, 1119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -439,8 +560,84 @@ public class formEnvoie extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtEmailActionPerformed
 
+    private void btnSupprimerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSupprimerMouseClicked
+
+//        String code = (String) tableCourrier.getValueAt(tableCourrier.getSelectedRow(), 1).toString();
+//        DefaultTableModel tm = (DefaultTableModel) tableCourrier.getModel();
+//        try {
+//            Article.supprimer(code);
+//        } catch (SQLException | ClassNotFoundException ex) {
+//            Logger.getLogger(formArticle.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        tm.setRowCount(0);
+//        try {
+//
+//            Article.actualiser(tm);
+//
+//            if (tableCourrier.getRowCount() != 0) {
+//
+//                btnImprimer.setEnabled(true);
+//                btnSupprimer.setEnabled(false);
+//                btnModifier.setEnabled(false);
+//            }
+//        } catch (SQLException | ClassNotFoundException ex) {
+//            Logger.getLogger(formArticle.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }//GEN-LAST:event_btnSupprimerMouseClicked
+
+    private void btnModifierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModifierMouseClicked
+//        DefaultTableModel tm = (DefaultTableModel) tableCourrier.getModel();
+//
+//        String code = (String) tableCourrier.getValueAt(tableCourrier.getSelectedRow(), 1).toString();
+//        String libelle = (String) tableCourrier.getValueAt(tableCourrier.getSelectedRow(), 2).toString();
+//        try {
+//
+//            Article.modifier(code, libelle);
+//            tm.setRowCount(0);
+//            Article.actualiser(tm);
+//            if (tableCourrier.getRowCount() != 0) {
+//                btnImprimer.setEnabled(true);
+//                btnSupprimer.setEnabled(false);
+//                btnModifier.setEnabled(false);
+//            }
+//        } catch (SQLException | ClassNotFoundException ex) {
+//            Logger.getLogger(formArticle.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }//GEN-LAST:event_btnModifierMouseClicked
+
+    private void btnModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifierActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnModifierActionPerformed
+
+    private void btnActualiserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualiserMouseClicked
+//        DefaultTableModel tm = (DefaultTableModel) tableCourrier.getModel();
+//        tm.setRowCount(0);
+//        try {
+//            Article.actualiser(tm);
+//            if (tableCourrier.getRowCount() != 0) {
+//                btnImprimer.setEnabled(true);
+//                btnSupprimer.setEnabled(false);
+//                btnModifier.setEnabled(false);
+//            }
+//        } catch (SQLException | ClassNotFoundException ex) {
+//            Logger.getLogger(formArticle.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+    }//GEN-LAST:event_btnActualiserMouseClicked
+
+    private void btnActualiserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualiserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnActualiserActionPerformed
+
+    private void btnImprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimerActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnImprimerActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualiser;
     private javax.swing.JButton btnAnnuler;
+    private javax.swing.JButton btnImprimer;
+    private javax.swing.JButton btnModifier;
+    private javax.swing.JButton btnSupprimer;
     private javax.swing.JButton btnValider;
     private javax.swing.JComboBox<String> cmbTypePiece;
     private javax.swing.JFormattedTextField jFormattedTextField1;
@@ -454,6 +651,7 @@ public class formEnvoie extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -464,12 +662,15 @@ public class formEnvoie extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JTable tableCourrier;
     private javax.swing.JTabbedPane tablepamel;
     private javax.swing.JTextField txtDescrip;
+    private javax.swing.JTextField txtDestination;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNature;
     private javax.swing.JTextField txtNom;
