@@ -4,8 +4,10 @@
  */
 package gestioncourrier_design;
 
+import classe.session;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,10 +17,15 @@ public class formMain extends javax.swing.JFrame {
 
     /**
      * Creates new form formMain
+     *
+     * @param user_session
      */
-    public formMain() {
+    private static session user_session;
+
+    public formMain(session user_session) {
 
         initComponents();
+        formMain.user_session = user_session;
 
         // Obtenir la taille de l'écran
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -32,6 +39,8 @@ public class formMain extends javax.swing.JFrame {
         fAccueil.setVisible(true);
         fAccueil.setLocation(0, 0);
         mPam.add(fAccueil);
+        String user_follName = user_session.getFirstName() + " " + user_session.getLastName();
+        txtUser.setText(user_follName);
     }
 
     /**
@@ -48,7 +57,7 @@ public class formMain extends javax.swing.JFrame {
         btnenvoie = new javax.swing.JLabel();
         btnreception = new javax.swing.JLabel();
         tnadmin = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        txtUser = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator3 = new javax.swing.JSeparator();
@@ -113,12 +122,16 @@ public class formMain extends javax.swing.JFrame {
         tnadmin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tnadmin.setFocusTraversalPolicyProvider(true);
 
-        jLabel6.setFont(new java.awt.Font("Hack", 1, 22)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Envoie colis");
-        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel6.setFocusTraversalPolicyProvider(true);
+        txtUser.setFont(new java.awt.Font("Hack", 1, 22)); // NOI18N
+        txtUser.setForeground(new java.awt.Color(255, 255, 255));
+        txtUser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtUser.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        txtUser.setFocusTraversalPolicyProvider(true);
+        txtUser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtUserMouseClicked(evt);
+            }
+        });
 
         jSeparator1.setBackground(new java.awt.Color(255, 255, 255));
         jSeparator1.setForeground(new java.awt.Color(255, 255, 255));
@@ -153,23 +166,28 @@ public class formMain extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(tnadmin))
-                    .addComponent(jLabel6)
                     .addGroup(javax.swing.GroupLayout.Alignment.CENTER, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnreception)
-                        .addGap(6, 6, 6))
-                    .addComponent(btnenvoie, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnreception)
+                                .addGap(6, 6, 6))
+                            .addComponent(btnenvoie, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtUser)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnenvoie, btnreception, jLabel6, tnadmin});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnenvoie, btnreception, tnadmin, txtUser});
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jSeparator1, jSeparator2, jSeparator3, jSeparator4});
 
@@ -192,12 +210,12 @@ public class formMain extends javax.swing.JFrame {
                 .addComponent(tnadmin)
                 .addGap(30, 30, 30)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jLabel6)
-                .addContainerGap(237, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnenvoie, btnreception, jLabel6, tnadmin});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnenvoie, btnreception, tnadmin});
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jSeparator1, jSeparator2, jSeparator3, jSeparator4});
 
@@ -211,7 +229,7 @@ public class formMain extends javax.swing.JFrame {
         );
         mPamLayout.setVerticalGroup(
             mPamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 770, Short.MAX_VALUE)
         );
 
         jMenuBar1.setBackground(new java.awt.Color(102, 102, 102));
@@ -251,7 +269,9 @@ public class formMain extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(mPam, javax.swing.GroupLayout.DEFAULT_SIZE, 923, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(mPam, javax.swing.GroupLayout.PREFERRED_SIZE, 770, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel1.getAccessibleContext().setAccessibleParent(this);
@@ -302,6 +322,25 @@ public class formMain extends javax.swing.JFrame {
     }//GEN-LAST:event_btnreceptionMouseClicked
 
     /**
+     *
+     * @param evt
+     *
+     * parametrage du botton de deconnection
+     */
+    private void txtUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUserMouseClicked
+        int reponse = JOptionPane.showConfirmDialog(null,
+                "Voulez-vous vraiment  deconnecter ?", "System Info",
+                JOptionPane.YES_NO_OPTION);
+        if (reponse == JOptionPane.YES_OPTION) {
+
+            JOptionPane.showMessageDialog(null, "A bientot " + user_session.getFirstName() + " " + user_session.getLastName());
+            this.dispose();
+            connexion fcon = new connexion();
+            fcon.setVisible(true);
+        }
+    }//GEN-LAST:event_txtUserMouseClicked
+
+    /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -331,7 +370,7 @@ public class formMain extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new formMain().setVisible(true);
+                new formMain(user_session).setVisible(true);
             }
         });
     }
@@ -340,7 +379,6 @@ public class formMain extends javax.swing.JFrame {
     private javax.swing.JLabel btnenvoie;
     private javax.swing.JLabel btnreception;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -353,5 +391,6 @@ public class formMain extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JDesktopPane mPam;
     private javax.swing.JLabel tnadmin;
+    private javax.swing.JLabel txtUser;
     // End of variables declaration//GEN-END:variables
 }

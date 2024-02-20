@@ -4,6 +4,18 @@
  */
 package gestioncourrier_design;
 
+import classe.connexionbd;
+import classe.session;
+import javax.swing.JOptionPane;
+import classe.validConnexion;
+import com.mysql.jdbc.PreparedStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author lankoande
@@ -13,6 +25,8 @@ public class connexion extends javax.swing.JFrame {
     /**
      * Creates new form connexion
      */
+    private static session user_session;
+
     public connexion() {
         initComponents();
     }
@@ -30,11 +44,11 @@ public class connexion extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txtuser = new javax.swing.JTextField();
-        txtpass = new javax.swing.JTextField();
-        btnview = new javax.swing.JLabel();
+        txtUser_name = new javax.swing.JTextField();
         btnexit = new javax.swing.JButton();
         btnconnexion = new javax.swing.JButton();
+        txtUser_pass = new javax.swing.JPasswordField();
+        btnView = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Connection");
@@ -50,41 +64,58 @@ public class connexion extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Hack", 1, 16)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pass-blanc.png"))); // NOI18N
         jLabel3.setText("Mot de passe :");
 
         jLabel4.setFont(new java.awt.Font("Hack", 1, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/user-blanc.png"))); // NOI18N
         jLabel4.setText("nom d'utilisateur : ");
 
-        txtuser.setBackground(new java.awt.Color(204, 245, 239));
-        txtuser.setFont(new java.awt.Font("Hack", 2, 15)); // NOI18N
-        txtuser.setForeground(new java.awt.Color(0, 0, 0));
-        txtuser.setMinimumSize(new java.awt.Dimension(64, 28));
-        txtuser.setName("nametxt"); // NOI18N
-
-        txtpass.setBackground(new java.awt.Color(204, 245, 239));
-        txtpass.setFont(new java.awt.Font("Hack", 2, 15)); // NOI18N
-        txtpass.setForeground(new java.awt.Color(0, 0, 0));
-        txtpass.setMinimumSize(new java.awt.Dimension(64, 28));
-        txtpass.setName("passetxt"); // NOI18N
-
-        btnview.setBackground(new java.awt.Color(255, 255, 255));
-        btnview.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/vue-blanc.png"))); // NOI18N
-        btnview.setName("passview"); // NOI18N
+        txtUser_name.setBackground(new java.awt.Color(255, 255, 255));
+        txtUser_name.setFont(new java.awt.Font("Hack", 2, 14)); // NOI18N
+        txtUser_name.setForeground(new java.awt.Color(0, 0, 0));
+        txtUser_name.setMinimumSize(new java.awt.Dimension(64, 28));
+        txtUser_name.setName("nametxt"); // NOI18N
 
         btnexit.setFont(new java.awt.Font("Hack", 1, 15)); // NOI18N
         btnexit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancel-blanc.png"))); // NOI18N
         btnexit.setText("ANNULER");
         btnexit.setName("btnexit"); // NOI18N
+        btnexit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnexitActionPerformed(evt);
+            }
+        });
 
         btnconnexion.setFont(new java.awt.Font("Hack", 1, 15)); // NOI18N
         btnconnexion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/valided-blanc.png"))); // NOI18N
         btnconnexion.setText("CONNECTION");
         btnconnexion.setName("btnconnexion"); // NOI18N
+        btnconnexion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnconnexionMouseClicked(evt);
+            }
+        });
+
+        txtUser_pass.setBackground(new java.awt.Color(255, 255, 255));
+        txtUser_pass.setFont(new java.awt.Font("Hack", 2, 14)); // NOI18N
+        txtUser_pass.setForeground(new java.awt.Color(0, 0, 0));
+
+        btnView.setBackground(new java.awt.Color(0, 0, 51));
+        btnView.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/vue-blanc.png"))); // NOI18N
+        btnView.setBorder(javax.swing.BorderFactory.createEmptyBorder(-1, -1, -1, -1));
+        btnView.setBorderPainted(false);
+        btnView.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnView.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnView.setIconTextGap(0);
+        btnView.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnViewMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -106,15 +137,19 @@ public class connexion extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtuser, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtUser_name, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtpass, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnview)))
-                        .addGap(30, 30, 30))))
+                                .addComponent(txtUser_pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnView)))
+                        .addContainerGap(35, Short.MAX_VALUE))))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnconnexion, btnexit});
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtUser_name, txtUser_pass});
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel3, jLabel4});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,20 +159,25 @@ public class connexion extends javax.swing.JFrame {
                 .addGap(75, 75, 75)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtuser, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
+                    .addComponent(txtUser_name, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE))
                 .addGap(60, 60, 60)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtpass, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnview, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(75, 75, 75)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtUser_pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnView))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnexit)
                     .addComponent(btnconnexion, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(90, 90, 90))
+                .addGap(75, 75, 75))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnconnexion, btnexit});
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtUser_name, txtUser_pass});
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel3, jLabel4});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -153,6 +193,81 @@ public class connexion extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnViewMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnViewMouseClicked
+        if (txtUser_pass.getEchoChar() == '*') {
+            txtUser_pass.setEchoChar((char) 0);
+            btnView.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cacher-blanc.png")));
+        } else if (txtUser_pass.getEchoChar() != '*') {
+            txtUser_pass.setEchoChar('*');
+            btnView.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/vue-blanc.png")));
+        }
+    }//GEN-LAST:event_btnViewMouseClicked
+
+    private void btnexitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnexitActionPerformed
+
+        int reponse = JOptionPane.showConfirmDialog(null,
+                "Voulez-vous vraiment quitter le programme ?", "Confirmation",
+                JOptionPane.YES_NO_OPTION);
+        if (reponse == JOptionPane.YES_OPTION) {
+            System.exit(0); // Quitter le programme
+        }
+    }//GEN-LAST:event_btnexitActionPerformed
+
+    /**
+     * fonction d'authentification
+     *
+     * @param evt
+     */
+    private void btnconnexionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnconnexionMouseClicked
+        if (txtUser_name.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Le Non d'utilisateur ne peux pas etre vie !", "System Info", JOptionPane.WARNING_MESSAGE);
+            txtUser_name.requestFocus();
+        } else if (txtUser_pass.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Le Mot de passe ne peux pas etre vie !", "System Info", JOptionPane.WARNING_MESSAGE);
+            txtUser_pass.requestFocus();
+        } else {
+            String userName = txtUser_name.getText();
+            String userPass = txtUser_pass.getText();
+
+            try {
+                //            verification dans la base de donnees
+                Boolean result = validConnexion.verifConnexion(userName, userPass);
+                if (result) {
+
+                    Connection con = connexionbd.seconnecter();
+
+                    String sql = "SELECT num_user, nom, prenom FROM users WHERE user_name = ?  ";
+                    try (PreparedStatement preparedStatement = (PreparedStatement) con.prepareStatement(sql)) {
+                        preparedStatement.setString(1, userName);
+
+                        try (ResultSet res = preparedStatement.executeQuery()) {
+                            if (res.next()) {
+                                //  recuperation des valeurs dans la DB
+                                String nom = res.getString("nom");
+                                String prenom = res.getString("prenom");
+                                String num = res.getString("num_user");
+                                // Instantiation de la classe session
+                                user_session = new session(num, nom, prenom);
+
+                                //ouverture du menu et passage de la session et parametre
+                                this.dispose();
+                                formMain menu = new formMain(user_session);
+                                menu.setVisible(true);
+                            }
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Echec de l'authentification");
+                }
+            } catch (SQLException | ClassNotFoundException ex) {
+                Logger.getLogger(connexion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_btnconnexionMouseClicked
 
     /**
      * @param args the command line arguments
@@ -190,14 +305,14 @@ public class connexion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnView;
     private javax.swing.JButton btnconnexion;
     private javax.swing.JButton btnexit;
-    private javax.swing.JLabel btnview;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtpass;
-    private javax.swing.JTextField txtuser;
+    private javax.swing.JTextField txtUser_name;
+    private javax.swing.JPasswordField txtUser_pass;
     // End of variables declaration//GEN-END:variables
 }
