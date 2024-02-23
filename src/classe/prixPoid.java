@@ -13,27 +13,35 @@ import java.sql.SQLException;
  *
  * @author lankoande
  */
-public class validConnexion {
+public class prixPoid {
 
-    public static Boolean verifConnexion(String user_name, String user_pass) throws SQLException, ClassNotFoundException {
+    public static Float getPrixPoid() throws SQLException, ClassNotFoundException { // Recuperation du prix/poids dans la BD
+
+        Float rslt = null;
 
         Connection con = connexionbd.seconnecter();
         // Utilisez des requêtes paramétrées pour éviter les injections SQL
-        String sql = "SELECT COUNT(*) FROM users WHERE user_name = ? AND user_pass = ?";
+        String sql = "SELECT prix_poid FROM prix_poids WHERE id= ?";
 
         try (PreparedStatement preparedStatement = (PreparedStatement) con.prepareStatement(sql)) {
-            preparedStatement.setString(1, user_name);
-            preparedStatement.setString(2, user_pass);
+            preparedStatement.setInt(1, 1);
 
             try (ResultSet res = preparedStatement.executeQuery()) {
                 if (res.next()) {
                     int rowCount = res.getInt(1);
-                    return rowCount > 0; // Si rowCount > 0, l'utilisateur existe
+                    rslt = res.getFloat("prix_poid");
                 }
             }
         }
+        return rslt;
+    }
 
-        return false; // Si aucun résultat trouvé, l'utilisateur n'existe pas
+    public static void updatePrixPoid(Float prix) throws ClassNotFoundException, SQLException {
+        Connection con = connexionbd.seconnecter(); // Creation d'une connexion
+        String insertQuery = "UPDATE prix_poids SET prix_poid =? WHERE id=1 ";
+        PreparedStatement insertStatement = (PreparedStatement) con.prepareStatement(insertQuery);
+        insertStatement.setFloat(1, prix);
+        insertStatement.executeUpdate();
     }
 
 }

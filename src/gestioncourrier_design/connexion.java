@@ -66,12 +66,14 @@ public class connexion extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/pass-blanc.png"))); // NOI18N
+        jLabel3.setLabelFor(txtUser_pass);
         jLabel3.setText("Mot de passe :");
 
         jLabel4.setFont(new java.awt.Font("Hack", 1, 16)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/user-blanc.png"))); // NOI18N
+        jLabel4.setLabelFor(txtUser_name);
         jLabel4.setText("nom d'utilisateur : ");
 
         txtUser_name.setBackground(new java.awt.Color(255, 255, 255));
@@ -80,8 +82,10 @@ public class connexion extends javax.swing.JFrame {
         txtUser_name.setMinimumSize(new java.awt.Dimension(64, 28));
         txtUser_name.setName("nametxt"); // NOI18N
 
+        btnexit.setBackground(new java.awt.Color(255, 255, 204));
         btnexit.setFont(new java.awt.Font("Hack", 1, 15)); // NOI18N
-        btnexit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancel-blanc.png"))); // NOI18N
+        btnexit.setForeground(new java.awt.Color(0, 0, 51));
+        btnexit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/cancel-noir.png"))); // NOI18N
         btnexit.setText("ANNULER");
         btnexit.setName("btnexit"); // NOI18N
         btnexit.addActionListener(new java.awt.event.ActionListener() {
@@ -90,13 +94,20 @@ public class connexion extends javax.swing.JFrame {
             }
         });
 
+        btnconnexion.setBackground(new java.awt.Color(255, 255, 204));
         btnconnexion.setFont(new java.awt.Font("Hack", 1, 15)); // NOI18N
-        btnconnexion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/valided-blanc.png"))); // NOI18N
+        btnconnexion.setForeground(new java.awt.Color(0, 0, 51));
+        btnconnexion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/valided-noir.png"))); // NOI18N
         btnconnexion.setText("CONNECTION");
         btnconnexion.setName("btnconnexion"); // NOI18N
         btnconnexion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnconnexionMouseClicked(evt);
+            }
+        });
+        btnconnexion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                btnconnexionKeyPressed(evt);
             }
         });
 
@@ -268,6 +279,10 @@ public class connexion extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnconnexionMouseClicked
+
+    private void btnconnexionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnconnexionKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnconnexionKeyPressed
 
     /**
      * @param args the command line arguments

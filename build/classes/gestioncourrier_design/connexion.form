@@ -131,6 +131,9 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/img/pass-blanc.png"/>
             </Property>
+            <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="txtUser_pass"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Mot de passe :"/>
           </Properties>
         </Component>
@@ -145,6 +148,9 @@
             <Property name="horizontalAlignment" type="int" value="2"/>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/img/user-blanc.png"/>
+            </Property>
+            <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="txtUser_name"/>
             </Property>
             <Property name="text" type="java.lang.String" value="nom d&apos;utilisateur : "/>
           </Properties>
@@ -168,11 +174,17 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnexit">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cc" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Hack" size="15" style="1"/>
             </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="33" green="0" red="0" type="rgb"/>
+            </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/img/cancel-blanc.png"/>
+              <Image iconType="3" name="/img/cancel-noir.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="ANNULER"/>
             <Property name="name" type="java.lang.String" value="btnexit" noResource="true"/>
@@ -183,17 +195,24 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnconnexion">
           <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="cc" green="ff" red="ff" type="rgb"/>
+            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Hack" size="15" style="1"/>
             </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="33" green="0" red="0" type="rgb"/>
+            </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/img/valided-blanc.png"/>
+              <Image iconType="3" name="/img/valided-noir.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="CONNECTION"/>
             <Property name="name" type="java.lang.String" value="btnconnexion" noResource="true"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnconnexionMouseClicked"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="btnconnexionKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JPasswordField" name="txtUser_pass">
