@@ -1,3 +1,10 @@
+/**
+ *
+ *
+ *this is LANKOANDE Urbain code
+ * Prince.COM << lankoandeurbain8@gmail.com >>
+ *
+ */
 package classe;
 
 import java.sql.*;

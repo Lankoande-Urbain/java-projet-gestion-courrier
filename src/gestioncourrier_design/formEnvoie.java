@@ -1,14 +1,22 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
+/**
+ *
+ *
+ *this is LANKOANDE Urbain code
+ * Prince.COM << lankoandeurbain8@gmail.com >>
+ *
  */
 package gestioncourrier_design;
 
 import classe.client;
 import classe.courrier;
+import classe.exportPdf;
 import classe.idGenerator;
 import classe.prixPoid;
+import java.io.File;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -18,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author lankoande
  */
-public class formEnvoie extends javax.swing.JInternalFrame {
+public final class formEnvoie extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form formEnvoie
@@ -28,7 +36,10 @@ public class formEnvoie extends javax.swing.JInternalFrame {
      */
     public formEnvoie() throws SQLException, ClassNotFoundException {
         initComponents();
+        numDestinataire.setVisible(false);
+        numExpediteur.setVisible(false);
         labPrixKg.setText(" Le prix par Kg de courrier est " + Float.toString(prixPoid.getPrixPoid()) + " f/Kg");
+        desacEditBtn();
     }
 
     /**
@@ -41,7 +52,7 @@ public class formEnvoie extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         tablepamel = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
+        tpam1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtNomExpediteur = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
@@ -74,7 +85,6 @@ public class formEnvoie extends javax.swing.JInternalFrame {
         txtPrixFac = new javax.swing.JTextField();
         btnValider = new javax.swing.JButton();
         btnAnnuler = new javax.swing.JButton();
-        txtDateDepotCourrier = new javax.swing.JFormattedTextField();
         jLabel19 = new javax.swing.JLabel();
         txtProvenanceCourrier = new javax.swing.JTextField();
         txtPhoneExpediteur = new javax.swing.JFormattedTextField();
@@ -83,13 +93,18 @@ public class formEnvoie extends javax.swing.JInternalFrame {
         labPrixKg = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         txtDestinationCourrier = new javax.swing.JTextField();
+        txtDateDepotCourrier = new com.toedter.calendar.JDateChooser();
+        numDestinataire = new javax.swing.JTextField();
+        numExpediteur = new javax.swing.JTextField();
+        btnDelete = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableCourrier = new javax.swing.JTable();
         btnSupprimer = new javax.swing.JButton();
         btnModifier = new javax.swing.JButton();
         btnActualiser = new javax.swing.JButton();
-        btnImprimer = new javax.swing.JButton();
+        btnExporter = new javax.swing.JButton();
 
         tablepamel.setBackground(new java.awt.Color(0, 0, 51));
         tablepamel.setForeground(new java.awt.Color(255, 255, 255));
@@ -98,7 +113,7 @@ public class formEnvoie extends javax.swing.JInternalFrame {
         tablepamel.setFont(new java.awt.Font("Hack", 1, 16)); // NOI18N
         tablepamel.setOpaque(true);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        tpam1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Hack", 3, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 51));
@@ -143,7 +158,7 @@ public class formEnvoie extends javax.swing.JInternalFrame {
 
         cmbTypePieceExpediteur.setFont(new java.awt.Font("Hack", 2, 13)); // NOI18N
         cmbTypePieceExpediteur.setForeground(new java.awt.Color(51, 51, 51));
-        cmbTypePieceExpediteur.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CNIB", "Paspoot" }));
+        cmbTypePieceExpediteur.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CNIB", "Passport" }));
         cmbTypePieceExpediteur.setEnabled(false);
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -261,11 +276,6 @@ public class formEnvoie extends javax.swing.JInternalFrame {
             }
         });
 
-        txtDateDepotCourrier.setForeground(new java.awt.Color(0, 0, 0));
-        txtDateDepotCourrier.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
-        txtDateDepotCourrier.setEnabled(false);
-        txtDateDepotCourrier.setFont(new java.awt.Font("Hack", 2, 14)); // NOI18N
-
         jLabel19.setFont(new java.awt.Font("Hack", 1, 16)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(0, 0, 0));
         jLabel19.setLabelFor(txtProvenanceCourrier);
@@ -320,207 +330,275 @@ public class formEnvoie extends javax.swing.JInternalFrame {
         txtDestinationCourrier.setForeground(new java.awt.Color(51, 51, 51));
         txtDestinationCourrier.setEnabled(false);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        txtDateDepotCourrier.setForeground(new java.awt.Color(51, 51, 51));
+        txtDateDepotCourrier.setToolTipText("");
+        txtDateDepotCourrier.setEnabled(false);
+        txtDateDepotCourrier.setFont(new java.awt.Font("Hack", 2, 13)); // NOI18N
+
+        numExpediteur.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numExpediteurActionPerformed(evt);
+            }
+        });
+
+        btnDelete.setBackground(new java.awt.Color(0, 0, 51));
+        btnDelete.setFont(new java.awt.Font("Hack", 1, 18)); // NOI18N
+        btnDelete.setForeground(new java.awt.Color(255, 255, 255));
+        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/delete-blanc.png"))); // NOI18N
+        btnDelete.setText("Supprimer");
+        btnDelete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDeleteMouseClicked(evt);
+            }
+        });
+
+        btnUpdate.setBackground(new java.awt.Color(0, 0, 51));
+        btnUpdate.setFont(new java.awt.Font("Hack", 1, 18)); // NOI18N
+        btnUpdate.setForeground(new java.awt.Color(255, 255, 255));
+        btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/actualiser-blanc.png"))); // NOI18N
+        btnUpdate.setText("Modifier");
+        btnUpdate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUpdateMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout tpam1Layout = new javax.swing.GroupLayout(tpam1);
+        tpam1.setLayout(tpam1Layout);
+        tpam1Layout.setHorizontalGroup(
+            tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tpam1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel19)
-                            .addComponent(jLabel20))
-                        .addGap(15, 15, 15)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtProvenanceCourrier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNumCourrier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDestinationCourrier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel14)
-                                    .addComponent(jLabel17))
-                                .addGap(15, 15, 15)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtDateDepotCourrier)
-                                    .addComponent(txtTypeCourrier))
-                                .addGap(30, 30, 30)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE))
-                                .addGap(15, 15, 15)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtPoids, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtPrixFac, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(btnNouveau)
-                                        .addGap(56, 56, 56)
-                                        .addComponent(btnAnnuler))
-                                    .addComponent(labPrixKg, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(43, 43, 43)
-                                .addComponent(btnValider, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(tpam1Layout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addComponent(btnUpdate)
+                        .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(tpam1Layout.createSequentialGroup()
+                                .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(tpam1Layout.createSequentialGroup()
+                                        .addGap(268, 268, 268)
+                                        .addComponent(txtTypeCourrier))
+                                    .addGroup(tpam1Layout.createSequentialGroup()
+                                        .addGap(271, 271, 271)
+                                        .addComponent(txtDateDepotCourrier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(27, 27, 27)
+                                .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(tpam1Layout.createSequentialGroup()
+                                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtPoids, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(9, 9, 9))
+                                    .addGroup(tpam1Layout.createSequentialGroup()
+                                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtPrixFac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(12, 12, 12))))
+                            .addGroup(tpam1Layout.createSequentialGroup()
+                                .addGap(32, 32, 32)
+                                .addComponent(btnDelete)
+                                .addGap(53, 53, 53)
+                                .addComponent(btnNouveau)
+                                .addGap(38, 38, 38)
+                                .addComponent(btnAnnuler)
+                                .addGap(67, 67, 67))))
+                    .addGroup(tpam1Layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addGap(18, 18, 18)
                         .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 766, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(tpam1Layout.createSequentialGroup()
+                        .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(tpam1Layout.createSequentialGroup()
+                                .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(tpam1Layout.createSequentialGroup()
                                         .addComponent(jLabel2)
                                         .addGap(20, 20, 20)
                                         .addComponent(txtNomExpediteur))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(tpam1Layout.createSequentialGroup()
                                         .addComponent(jLabel6)
                                         .addGap(18, 18, 18)
                                         .addComponent(txtPhoneExpediteur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(30, 30, 30)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(tpam1Layout.createSequentialGroup()
                                         .addComponent(jLabel5)
                                         .addGap(18, 18, 18)
                                         .addComponent(txtPrenomExpediteur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(tpam1Layout.createSequentialGroup()
                                         .addComponent(jLabel4)
                                         .addGap(20, 20, 20)
                                         .addComponent(cmbTypePieceExpediteur, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(tpam1Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtNumPieceExpediteur, javax.swing.GroupLayout.PREFERRED_SIZE, 486, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(tpam1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(30, 30, 30)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(tpam1Layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(tpam1Layout.createSequentialGroup()
+                                        .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel10)
+                                            .addComponent(jLabel9)
+                                            .addComponent(jLabel8))
+                                        .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(tpam1Layout.createSequentialGroup()
+                                                .addGap(15, 15, 15)
+                                                .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(txtPrenomDestinateur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(txtNomDestinateur, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(tpam1Layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addComponent(btnValider, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(txtPhoneDestinateur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addGroup(tpam1Layout.createSequentialGroup()
+                                        .addComponent(jLabel11)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(tpam1Layout.createSequentialGroup()
+                                .addGap(121, 121, 121)
+                                .addComponent(numExpediteur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(numDestinataire, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(tpam1Layout.createSequentialGroup()
+                        .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel19)
+                            .addComponent(jLabel20))
+                        .addGap(15, 15, 15)
+                        .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txtProvenanceCourrier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNumCourrier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDestinationCourrier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(30, 30, 30)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel10)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel8))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(15, 15, 15)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(txtPrenomDestinateur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(txtNomDestinateur, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtPhoneDestinateur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel11)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(0, 299, Short.MAX_VALUE))
+                        .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel17)
+                            .addComponent(labPrixKg, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 287, Short.MAX_VALUE))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel10, jLabel2, jLabel4, jLabel5, jLabel6, jLabel7, jLabel8, jLabel9});
+        tpam1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel10, jLabel2, jLabel4, jLabel5, jLabel6, jLabel7, jLabel8, jLabel9});
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cmbTypePieceExpediteur, txtDateDepotCourrier, txtDestinationCourrier, txtNomDestinateur, txtNomExpediteur, txtNumCourrier, txtPhoneDestinateur, txtPhoneExpediteur, txtPoids, txtPrenomDestinateur, txtPrenomExpediteur, txtPrixFac, txtProvenanceCourrier, txtTypeCourrier});
+        tpam1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cmbTypePieceExpediteur, txtDateDepotCourrier, txtDestinationCourrier, txtNomDestinateur, txtNomExpediteur, txtNumCourrier, txtPhoneDestinateur, txtPhoneExpediteur, txtPoids, txtPrenomDestinateur, txtPrenomExpediteur, txtPrixFac, txtProvenanceCourrier, txtTypeCourrier});
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel13, jLabel14, jLabel17});
+        tpam1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel13, jLabel14, jLabel17});
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAnnuler, btnNouveau, btnValider});
+        tpam1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAnnuler, btnDelete, btnNouveau, btnUpdate, btnValider});
 
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        tpam1Layout.setVerticalGroup(
+            tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tpam1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel1)
                     .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tpam1Layout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(tpam1Layout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(tpam1Layout.createSequentialGroup()
+                                .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel8)
                                     .addComponent(txtNomDestinateur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(30, 30, 30)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(txtPrenomDestinateur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel9))
                                 .addGap(30, 30, 30)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel10)
                                     .addComponent(txtPhoneDestinateur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel5)
                                 .addComponent(txtPrenomExpediteur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(tpam1Layout.createSequentialGroup()
+                                .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtNomExpediteur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(30, 30, 30)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel6)
                                     .addComponent(txtPhoneExpediteur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel4)
                                     .addComponent(cmbTypePieceExpediteur, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(30, 30, 30)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel7)
-                                    .addComponent(txtNumPieceExpediteur, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtNumPieceExpediteur, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(numDestinataire, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(numExpediteur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 0, 0)
+                .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12))
                 .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(txtNumCourrier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16)
-                    .addComponent(txtTypeCourrier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPoids, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tpam1Layout.createSequentialGroup()
+                        .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(txtNumCourrier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16)
+                            .addComponent(txtTypeCourrier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtPoids, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28)
+                        .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtPrixFac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtProvenanceCourrier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel19)
+                                .addComponent(jLabel18))
+                            .addComponent(txtDateDepotCourrier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(tpam1Layout.createSequentialGroup()
+                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel17)))
                 .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17)
-                    .addComponent(jLabel18)
-                    .addComponent(txtPrixFac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDateDepotCourrier, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtProvenanceCourrier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel19))
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDestinationCourrier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20)
                     .addComponent(labPrixKg))
-                .addGap(28, 28, 28)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnValider, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
+                .addGroup(tpam1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnDelete)
+                    .addComponent(btnNouveau)
                     .addComponent(btnAnnuler)
-                    .addComponent(btnNouveau))
-                .addGap(85, 85, 85))
+                    .addComponent(btnValider, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(121, 121, 121))
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel10, jLabel2, jLabel4, jLabel5, jLabel6, jLabel7, jLabel8, jLabel9});
+        tpam1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel10, jLabel2, jLabel4, jLabel5, jLabel6, jLabel7, jLabel8, jLabel9});
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cmbTypePieceExpediteur, txtDateDepotCourrier, txtDestinationCourrier, txtNomDestinateur, txtNomExpediteur, txtNumCourrier, txtNumPieceExpediteur, txtPhoneDestinateur, txtPhoneExpediteur, txtPoids, txtPrenomDestinateur, txtPrenomExpediteur, txtPrixFac, txtProvenanceCourrier, txtTypeCourrier});
+        tpam1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cmbTypePieceExpediteur, txtDateDepotCourrier, txtDestinationCourrier, txtNomDestinateur, txtNomExpediteur, txtNumCourrier, txtNumPieceExpediteur, txtPhoneDestinateur, txtPhoneExpediteur, txtPoids, txtPrenomDestinateur, txtPrenomExpediteur, txtPrixFac, txtProvenanceCourrier, txtTypeCourrier});
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel13, jLabel14, jLabel16, jLabel17, jLabel18});
+        tpam1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel13, jLabel14, jLabel16, jLabel17, jLabel18});
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAnnuler, btnNouveau, btnValider});
+        tpam1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAnnuler, btnDelete, btnNouveau, btnUpdate, btnValider});
 
-        tablepamel.addTab("Enregistrer de courrier a envoyer", jPanel1);
+        tablepamel.addTab("Enregistrer de courrier a envoyer", tpam1);
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setFont(new java.awt.Font("Hack", 2, 14)); // NOI18N
+        jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane1MouseClicked(evt);
+            }
+        });
 
         tableCourrier.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -530,14 +608,20 @@ public class formEnvoie extends javax.swing.JInternalFrame {
                 "Num Courrier", "Type ", "Date d'envoie", "Poids (Kg)", "prix (Fcfa)", "Provenance", "Destination", "Expediteur", "Destinataire", "Status"
             }
         ));
+        tableCourrier.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableCourrierMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableCourrier);
         if (tableCourrier.getColumnModel().getColumnCount() > 0) {
             tableCourrier.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tableCourrier.getColumnModel().getColumn(1).setPreferredWidth(40);
             tableCourrier.getColumnModel().getColumn(2).setPreferredWidth(40);
             tableCourrier.getColumnModel().getColumn(3).setPreferredWidth(40);
             tableCourrier.getColumnModel().getColumn(4).setPreferredWidth(40);
-            tableCourrier.getColumnModel().getColumn(5).setPreferredWidth(50);
-            tableCourrier.getColumnModel().getColumn(6).setPreferredWidth(50);
+            tableCourrier.getColumnModel().getColumn(5).setPreferredWidth(40);
+            tableCourrier.getColumnModel().getColumn(6).setPreferredWidth(40);
         }
 
         btnSupprimer.setBackground(new java.awt.Color(0, 0, 51));
@@ -585,15 +669,20 @@ public class formEnvoie extends javax.swing.JInternalFrame {
             }
         });
 
-        btnImprimer.setBackground(new java.awt.Color(0, 0, 51));
-        btnImprimer.setFont(new java.awt.Font("Hack", 1, 18)); // NOI18N
-        btnImprimer.setForeground(new java.awt.Color(255, 255, 255));
-        btnImprimer.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/imprimante-blanc.png"))); // NOI18N
-        btnImprimer.setText("Imprimer");
-        btnImprimer.setEnabled(false);
-        btnImprimer.addActionListener(new java.awt.event.ActionListener() {
+        btnExporter.setBackground(new java.awt.Color(0, 0, 51));
+        btnExporter.setFont(new java.awt.Font("Hack", 1, 18)); // NOI18N
+        btnExporter.setForeground(new java.awt.Color(255, 255, 255));
+        btnExporter.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/imprimante-blanc.png"))); // NOI18N
+        btnExporter.setText("Exporter ");
+        btnExporter.setEnabled(false);
+        btnExporter.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnExporterMouseClicked(evt);
+            }
+        });
+        btnExporter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImprimerActionPerformed(evt);
+                btnExporterActionPerformed(evt);
             }
         });
 
@@ -602,22 +691,22 @@ public class formEnvoie extends javax.swing.JInternalFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(123, Short.MAX_VALUE)
+                .addContainerGap(117, Short.MAX_VALUE)
                 .addComponent(btnSupprimer)
                 .addGap(55, 55, 55)
                 .addComponent(btnModifier)
                 .addGap(55, 55, 55)
                 .addComponent(btnActualiser)
                 .addGap(55, 55, 55)
-                .addComponent(btnImprimer)
-                .addGap(120, 380, Short.MAX_VALUE))
+                .addComponent(btnExporter)
+                .addGap(120, 374, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
                 .addGap(23, 23, 23))
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnActualiser, btnImprimer, btnModifier, btnSupprimer});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnActualiser, btnExporter, btnModifier, btnSupprimer});
 
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -629,11 +718,11 @@ public class formEnvoie extends javax.swing.JInternalFrame {
                     .addComponent(btnModifier)
                     .addComponent(btnSupprimer)
                     .addComponent(btnActualiser)
-                    .addComponent(btnImprimer, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnExporter, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28))
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnActualiser, btnImprimer, btnModifier, btnSupprimer});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnActualiser, btnExporter, btnModifier, btnSupprimer});
 
         tablepamel.addTab("Liste des courriers envoyer", jPanel2);
 
@@ -641,11 +730,17 @@ public class formEnvoie extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tablepamel, javax.swing.GroupLayout.DEFAULT_SIZE, 1340, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tablepamel)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(tablepamel)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tablepamel)
+                .addContainerGap())
         );
 
         pack();
@@ -704,9 +799,9 @@ public class formEnvoie extends javax.swing.JInternalFrame {
         DefaultTableModel tm = (DefaultTableModel) tableCourrier.getModel();
         tm.setRowCount(0);
         try {
-            courrier.actualiser(tm);
+            courrier.actualiserListEnvoie(tm);
             if (tableCourrier.getRowCount() != 0) {
-                btnImprimer.setEnabled(true);
+                btnExporter.setEnabled(true);
                 btnSupprimer.setEnabled(false);
                 btnModifier.setEnabled(false);
             }
@@ -719,9 +814,9 @@ public class formEnvoie extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnActualiserActionPerformed
 
-    private void btnImprimerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimerActionPerformed
+    private void btnExporterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExporterActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnImprimerActionPerformed
+    }//GEN-LAST:event_btnExporterActionPerformed
 
     private void btnNouveauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNouveauMouseClicked
 
@@ -776,7 +871,7 @@ public class formEnvoie extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(rootPane, "Le Poids du courrier ne peux pas etre vie !", "System Info", JOptionPane.WARNING_MESSAGE);
             txtPoids.requestFocus();
 
-        } else if (txtDateDepotCourrier.getText().isEmpty()) {
+        } else if (txtDateDepotCourrier.getDate() == null) {
             JOptionPane.showMessageDialog(rootPane, "La date de depot du courrierne peux pas etre vie !", "System Info", JOptionPane.WARNING_MESSAGE);
             txtDateDepotCourrier.requestFocus();
 
@@ -818,7 +913,8 @@ public class formEnvoie extends javax.swing.JInternalFrame {
             String numCourrier = txtNumCourrier.getText();
             String typeCourrier = txtTypeCourrier.getText();
             String poidCourrier = txtPoids.getText();
-            String dateDepotCourrier = txtDateDepotCourrier.getText();
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            String dateDepotCourrier = dateFormat.format(txtDateDepotCourrier.getDate());
             String prixFac = txtPrixFac.getText();
             String provenanceCourrier = txtProvenanceCourrier.getText();
             String destinationCourrier = txtDestinationCourrier.getText();
@@ -880,6 +976,181 @@ public class formEnvoie extends javax.swing.JInternalFrame {
         txtPrixFac.setText(Float.toString(prix));
     }//GEN-LAST:event_txtPoidsFocusLost
 
+    private void btnExporterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExporterMouseClicked
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd_HHmmss");
+        Date date = new Date();
+        String userHomeDirectory = System.getProperty("user.home");
+//        System.out.print(userHomeDirectory);
+        String directoryPath = userHomeDirectory + File.separator + "Documents/";
+        String fileName = "listeCourrier" + formatter.format(date) + ".pdf";
+        exportPdf.exportTableToPdf(tableCourrier, directoryPath + fileName);
+    }//GEN-LAST:event_btnExporterMouseClicked
+
+    private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jScrollPane1MouseClicked
+
+    private void tableCourrierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCourrierMouseClicked
+        DefaultTableModel dtm = (DefaultTableModel) tableCourrier.getModel();
+        int tIndex = tableCourrier.getSelectedRow();
+        txtNumCourrier.setText(dtm.getValueAt(tIndex, 0).toString());
+//        numero = dtm.getValueAt(tIndex, 0).toString();
+        try {
+            if (null == courrier.rechercheOneColis(txtNumCourrier.getText())) {
+                JOptionPane.showMessageDialog(null, "<html> Colis deja Recuperer <br> Imppossible de modifier les enformation !</html>");
+            } else {
+
+                JOptionPane.showMessageDialog(null, "<html> Veillez retournez dans la feuille d'enregistrement pour editer</html>");
+                String[] rsult = courrier.rechercheOneColis(txtNumCourrier.getText());
+
+                numExpediteur.setText(rsult[0]);
+                txtNomExpediteur.setText(rsult[1]);
+                txtPrenomExpediteur.setText(rsult[2]);
+                txtPhoneExpediteur.setText(rsult[3]);
+                if ("CNIB".equals(rsult[4])) {
+                    cmbTypePieceExpediteur.setSelectedIndex(0);
+                } else {
+                    cmbTypePieceExpediteur.setSelectedIndex(1);
+                }
+                txtNumPieceExpediteur.setText(rsult[5]);
+                numDestinataire.setText(rsult[6]);
+                txtNomDestinateur.setText(rsult[7]);
+                txtPrenomDestinateur.setText(rsult[8]);
+                txtPhoneDestinateur.setText(rsult[9]);
+                txtTypeCourrier.setText(rsult[10]);
+                txtPoids.setText(rsult[11]);
+                txtProvenanceCourrier.setText(rsult[12]);
+                //txtDateDepotCourrier.setDate((Date) rsult[13]);
+                txtPrixFac.setText(rsult[14]);
+                txtDestinationCourrier.setText(rsult[15]);
+                allActive();
+                btnValider.setEnabled(false);
+                activeEditBtn();
+
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(formEnvoie.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tableCourrierMouseClicked
+
+    private void numExpediteurActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numExpediteurActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_numExpediteurActionPerformed
+
+    private void btnDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseClicked
+        try {
+            if (JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment effectuer la suppresion [ ", "Confirmation", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                courrier.supprimerCourrier(txtNumCourrier.getText());
+                client.supprimerClient(numExpediteur.getText());
+                client.supprimerClient(numDestinataire.getText());
+                desacEditBtn();
+                allDesactive();
+                allRemouve();
+            }
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(FormUtilisateur.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnDeleteMouseClicked
+
+    private void btnUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMouseClicked
+
+        if (JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment effectuer la suppresion [ ", "Confirmation", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            if (txtNomExpediteur.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "Le Nom de l'expediteur ne peux pas etre vie !", "System Info", JOptionPane.WARNING_MESSAGE);
+                txtNomExpediteur.requestFocus();
+
+            } else if (txtPrenomExpediteur.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "Le Prenom de l'expediteur ne peux pas etre vie !", "System Info", JOptionPane.WARNING_MESSAGE);
+                txtPrenomExpediteur.requestFocus();
+
+            } else if (txtPhoneExpediteur.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "Le numero de telephone de l'expediteur ne peux pas etre vie !", "System Info", JOptionPane.WARNING_MESSAGE);
+                txtPhoneExpediteur.requestFocus();
+
+            } else if (txtNumPieceExpediteur.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "Le Numero de la piece de l'expediteur ne peux pas etre vie !", "System Info", JOptionPane.WARNING_MESSAGE);
+                txtNumPieceExpediteur.requestFocus();
+
+            } else if (txtNomDestinateur.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "Le Nom du destinateur ne peux pas etre vie !", "System Info", JOptionPane.WARNING_MESSAGE);
+                txtNomDestinateur.requestFocus();
+
+            } else if (txtPrenomDestinateur.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "Le Prenom du destinateur ne peux pas etre vie !", "System Info", JOptionPane.WARNING_MESSAGE);
+                txtPrenomDestinateur.requestFocus();
+
+            } else if (txtPhoneDestinateur.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "Le Numero telephonique  du destinateur ne peux pas etre vie !", "System Info", JOptionPane.WARNING_MESSAGE);
+                txtPhoneDestinateur.requestFocus();
+
+            } else if (txtTypeCourrier.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "Le Type du courrier ne peux pas etre vie !", "System Info", JOptionPane.WARNING_MESSAGE);
+                txtTypeCourrier.requestFocus();
+
+            } else if (txtPoids.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "Le Poids du courrier ne peux pas etre vie !", "System Info", JOptionPane.WARNING_MESSAGE);
+                txtPoids.requestFocus();
+
+            } else if (txtDateDepotCourrier.getDate() == null) {
+                JOptionPane.showMessageDialog(rootPane, "La date de depot du courrierne peux pas etre vie !", "System Info", JOptionPane.WARNING_MESSAGE);
+                txtDateDepotCourrier.requestFocus();
+
+            } else if (txtProvenanceCourrier.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "La  ville de provenance du courrier ne peux pas etre vie !", "System Info", JOptionPane.WARNING_MESSAGE);
+                txtProvenanceCourrier.requestFocus();
+
+            } else if (txtDestinationCourrier.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "La ville de destination du courrier ne peux pas etre vie !", "System Info", JOptionPane.WARNING_MESSAGE);
+                txtDestinationCourrier.requestFocus();
+
+            } else {
+                //recuperation de laveurs
+                String NomExpediteur = txtNomExpediteur.getText();
+                String prenomExpediteur = txtPrenomExpediteur.getText();
+                String phoneExpediteur = txtPhoneExpediteur.getText();
+                String typePieceExpediteur = (String) cmbTypePieceExpediteur.getSelectedItem();
+                String numPieceExpediteur = txtNumPieceExpediteur.getText();
+
+                try {
+                    //envoie des donnees pour modification
+                    client.ModifierClient(numExpediteur.getText(), NomExpediteur, prenomExpediteur, phoneExpediteur, typePieceExpediteur, numPieceExpediteur);
+                } catch (ClassNotFoundException | SQLException ex) {
+                    Logger.getLogger(formEnvoie.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                String nomDestinateur = txtNomDestinateur.getText();
+                String prenomDestinateur = txtPrenomDestinateur.getText();
+                String phoneDestinateur = txtPhoneDestinateur.getText();
+
+                try {
+                    client.ModifierClient(numDestinataire.getText(), nomDestinateur, prenomDestinateur, phoneDestinateur, "Not presence", "Not presence");
+                } catch (ClassNotFoundException | SQLException ex) {
+                    Logger.getLogger(formEnvoie.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                String numCourrier = txtNumCourrier.getText();
+                String typeCourrier = txtTypeCourrier.getText();
+                String poidCourrier = txtPoids.getText();
+                DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+                String dateDepotCourrier = dateFormat.format(txtDateDepotCourrier.getDate());
+                String prixFac = txtPrixFac.getText();
+                String provenanceCourrier = txtProvenanceCourrier.getText();
+                String destinationCourrier = txtDestinationCourrier.getText();
+
+                try {
+                    courrier.ModiferCourrier(numCourrier, typeCourrier, poidCourrier, provenanceCourrier, destinationCourrier, prixFac, dateDepotCourrier, NomExpediteur, nomDestinateur);
+                } catch (ClassNotFoundException | SQLException ex) {
+                    Logger.getLogger(formEnvoie.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        }
+        desacEditBtn();
+        allDesactive();
+        allRemouve();
+
+    }//GEN-LAST:event_btnUpdateMouseClicked
+
     // Fonctions
     private void allActive() {
         btnValider.setEnabled(true);
@@ -935,18 +1206,30 @@ public class formEnvoie extends javax.swing.JInternalFrame {
         txtTypeCourrier.setText(null);
         txtPoids.setText(null);
         txtDestinationCourrier.setText(null);
-        txtDateDepotCourrier.setText(null);
+        txtDateDepotCourrier.removeAll();
         txtPrixFac.setText(null);
         txtProvenanceCourrier.setText(null);
+    }
+
+    public void desacEditBtn() {
+        btnUpdate.setEnabled(false);
+        btnDelete.setEnabled(false);
+    }
+
+    public void activeEditBtn() {
+        btnUpdate.setEnabled(true);
+        btnDelete.setEnabled(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualiser;
     private javax.swing.JButton btnAnnuler;
-    private javax.swing.JButton btnImprimer;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnExporter;
     private javax.swing.JButton btnModifier;
     private javax.swing.JButton btnNouveau;
     private javax.swing.JButton btnSupprimer;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnValider;
     private javax.swing.JComboBox<String> cmbTypePieceExpediteur;
     private javax.swing.JLabel jLabel1;
@@ -967,7 +1250,6 @@ public class formEnvoie extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
@@ -975,9 +1257,12 @@ public class formEnvoie extends javax.swing.JInternalFrame {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JLabel labPrixKg;
+    private javax.swing.JTextField numDestinataire;
+    private javax.swing.JTextField numExpediteur;
     private javax.swing.JTable tableCourrier;
     private javax.swing.JTabbedPane tablepamel;
-    private javax.swing.JFormattedTextField txtDateDepotCourrier;
+    private javax.swing.JPanel tpam1;
+    private com.toedter.calendar.JDateChooser txtDateDepotCourrier;
     private javax.swing.JTextField txtDestinationCourrier;
     private javax.swing.JTextField txtNomDestinateur;
     private javax.swing.JTextField txtNomExpediteur;

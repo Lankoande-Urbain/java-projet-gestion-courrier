@@ -12,7 +12,6 @@ import com.mysql.jdbc.PreparedStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,6 +28,7 @@ public class connexion extends javax.swing.JFrame {
 
     public connexion() {
         initComponents();
+
     }
 
     /**
@@ -55,6 +55,11 @@ public class connexion extends javax.swing.JFrame {
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 51));
+        jPanel1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPanel1KeyPressed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Hack", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -81,6 +86,11 @@ public class connexion extends javax.swing.JFrame {
         txtUser_name.setForeground(new java.awt.Color(0, 0, 0));
         txtUser_name.setMinimumSize(new java.awt.Dimension(64, 28));
         txtUser_name.setName("nametxt"); // NOI18N
+        txtUser_name.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUser_nameKeyPressed(evt);
+            }
+        });
 
         btnexit.setBackground(new java.awt.Color(255, 255, 204));
         btnexit.setFont(new java.awt.Font("Hack", 1, 15)); // NOI18N
@@ -114,6 +124,11 @@ public class connexion extends javax.swing.JFrame {
         txtUser_pass.setBackground(new java.awt.Color(255, 255, 255));
         txtUser_pass.setFont(new java.awt.Font("Hack", 2, 14)); // NOI18N
         txtUser_pass.setForeground(new java.awt.Color(0, 0, 0));
+        txtUser_pass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUser_passKeyPressed(evt);
+            }
+        });
 
         btnView.setBackground(new java.awt.Color(0, 0, 51));
         btnView.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/vue-blanc.png"))); // NOI18N
@@ -248,7 +263,7 @@ public class connexion extends javax.swing.JFrame {
 
                     Connection con = connexionbd.seconnecter();
 
-                    String sql = "SELECT num_user, nom, prenom FROM users WHERE user_name = ?  ";
+                    String sql = "SELECT num_user, nom, prenom, role FROM users WHERE user_name = ?  ;";
                     try (PreparedStatement preparedStatement = (PreparedStatement) con.prepareStatement(sql)) {
                         preparedStatement.setString(1, userName);
 
@@ -258,9 +273,13 @@ public class connexion extends javax.swing.JFrame {
                                 String nom = res.getString("nom");
                                 String prenom = res.getString("prenom");
                                 String num = res.getString("num_user");
-                                // Instantiation de la classe session
-                                user_session = new session(num, nom, prenom);
 
+                                // Instantiation de la classe session
+                                if (res.getString("role").equals("ADMINISTRATEUR")) {
+                                    user_session = new session(num, nom, prenom, true);
+                                } else {
+                                    user_session = new session(num, nom, prenom, false);
+                                }
                                 //ouverture du menu et passage de la session et parametre
                                 this.dispose();
                                 formMain menu = new formMain(user_session);
@@ -268,7 +287,6 @@ public class connexion extends javax.swing.JFrame {
                             }
                         }
                     } catch (SQLException e) {
-                        e.printStackTrace();
                     }
 
                 } else {
@@ -283,6 +301,18 @@ public class connexion extends javax.swing.JFrame {
     private void btnconnexionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnconnexionKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnconnexionKeyPressed
+
+    private void txtUser_passKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUser_passKeyPressed
+
+    }//GEN-LAST:event_txtUser_passKeyPressed
+
+    private void txtUser_nameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUser_nameKeyPressed
+
+    }//GEN-LAST:event_txtUser_nameKeyPressed
+
+    private void jPanel1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPanel1KeyPressed
+
+    }//GEN-LAST:event_jPanel1KeyPressed
 
     /**
      * @param args the command line arguments
@@ -312,11 +342,10 @@ public class connexion extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new connexion().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new connexion().setVisible(true);
         });
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -330,4 +359,5 @@ public class connexion extends javax.swing.JFrame {
     private javax.swing.JTextField txtUser_name;
     private javax.swing.JPasswordField txtUser_pass;
     // End of variables declaration//GEN-END:variables
+
 }

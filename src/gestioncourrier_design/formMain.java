@@ -29,6 +29,8 @@ public class formMain extends javax.swing.JFrame {
 
         initComponents();
         formMain.user_session = user_session;
+        btnAdmin.setVisible(user_session.getUserStatus());
+        usersepa.setVisible(user_session.getUserStatus());
 
         // Obtenir la taille de l'écran
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -43,7 +45,7 @@ public class formMain extends javax.swing.JFrame {
         fAccueil.setLocation(0, 0);
         mPam.add(fAccueil);
         String user_follName = user_session.getFirstName() + " " + user_session.getLastName();
-        txtUser.setText(user_follName);
+        txtUser.setText("<html>" + user_follName + " <br>DECONNEXT</html>");
     }
 
     /**
@@ -63,7 +65,7 @@ public class formMain extends javax.swing.JFrame {
         txtUser = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
-        jSeparator3 = new javax.swing.JSeparator();
+        usersepa = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
         btnStatistiq = new javax.swing.JLabel();
         jSeparator5 = new javax.swing.JSeparator();
@@ -74,7 +76,12 @@ public class formMain extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenu1 = new javax.swing.JMenu();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                entrer(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 51));
 
@@ -126,6 +133,11 @@ public class formMain extends javax.swing.JFrame {
         btnAdmin.setText("Administration");
         btnAdmin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAdmin.setFocusTraversalPolicyProvider(true);
+        btnAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAdminMouseClicked(evt);
+            }
+        });
 
         txtUser.setFont(new java.awt.Font("Hack", 1, 22)); // NOI18N
         txtUser.setForeground(new java.awt.Color(255, 255, 255));
@@ -148,9 +160,9 @@ public class formMain extends javax.swing.JFrame {
         jSeparator2.setForeground(new java.awt.Color(255, 255, 255));
         jSeparator2.setFont(new java.awt.Font("Cantarell", 2, 36)); // NOI18N
 
-        jSeparator3.setBackground(new java.awt.Color(0, 0, 51));
-        jSeparator3.setForeground(new java.awt.Color(255, 255, 255));
-        jSeparator3.setFont(new java.awt.Font("Cantarell", 2, 36)); // NOI18N
+        usersepa.setBackground(new java.awt.Color(0, 0, 51));
+        usersepa.setForeground(new java.awt.Color(255, 255, 255));
+        usersepa.setFont(new java.awt.Font("Cantarell", 2, 36)); // NOI18N
 
         jSeparator4.setBackground(new java.awt.Color(0, 0, 51));
         jSeparator4.setForeground(new java.awt.Color(255, 255, 255));
@@ -185,7 +197,7 @@ public class formMain extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnAdmin)
-                            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(usersepa, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,7 +224,7 @@ public class formMain extends javax.swing.JFrame {
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAdmin, btnStatistiq, btnenvoie, btnreception, txtUser});
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jSeparator1, jSeparator2, jSeparator3, jSeparator4});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jSeparator1, jSeparator2, jSeparator4, usersepa});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,7 +248,7 @@ public class formMain extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnAdmin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(usersepa, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(61, 61, 61))
@@ -244,7 +256,7 @@ public class formMain extends javax.swing.JFrame {
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAdmin, btnStatistiq, btnenvoie, btnreception});
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jSeparator1, jSeparator2, jSeparator3, jSeparator4});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jSeparator1, jSeparator2, jSeparator4, usersepa});
 
         mPam.setPreferredSize(new java.awt.Dimension(600, 600));
 
@@ -361,7 +373,7 @@ public class formMain extends javax.swing.JFrame {
      */
     private void txtUserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtUserMouseClicked
         int reponse = JOptionPane.showConfirmDialog(null,
-                "Voulez-vous vraiment  deconnecter ?", "System Info",
+                "Voulez-vous vraiment  vous deconnecter ?", "System Info",
                 JOptionPane.YES_NO_OPTION);
         if (reponse == JOptionPane.YES_OPTION) {
 
@@ -371,6 +383,25 @@ public class formMain extends javax.swing.JFrame {
             fcon.setVisible(true);
         }
     }//GEN-LAST:event_txtUserMouseClicked
+
+    private void entrer(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_entrer
+        // TODO add your handling code here:
+    }//GEN-LAST:event_entrer
+
+    private void btnAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdminMouseClicked
+        mPam.removeAll();// Supsresion du contenu de la page mPam
+        mPam.repaint(); // Reactualisation de la page
+
+        formAdministration fenetre = new formAdministration(); // instanciation de la femetre de gestion
+        fenetre.setSize(mPam.getWidth(), mPam.getHeight());
+        fenetre.setVisible(true);
+
+        mPam.add(fenetre); // affectation de la page de gestion a mPam
+//        fenetre.moveToFront();
+        btnAdmin.setEnabled(false);
+        btnreception.setEnabled(true);
+        btnenvoie.setEnabled(true);
+    }//GEN-LAST:event_btnAdminMouseClicked
 
     /**
      * @param args the command line arguments
@@ -421,10 +452,10 @@ public class formMain extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JDesktopPane mPam;
     private javax.swing.JLabel txtUser;
+    private javax.swing.JSeparator usersepa;
     // End of variables declaration//GEN-END:variables
 }

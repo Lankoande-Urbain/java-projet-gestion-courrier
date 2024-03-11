@@ -2,6 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+/**
+ *
+ *
+ *this is LANKOANDE Urbain code
+ * Prince.COM << lankoandeurbain8@gmail.com >>
+ *
+ */
 package classe;
 
 import com.mysql.jdbc.PreparedStatement;
@@ -19,7 +26,7 @@ public class validConnexion {
 
         Connection con = connexionbd.seconnecter();
         // Utilisez des requêtes paramétrées pour éviter les injections SQL
-        String sql = "SELECT COUNT(*) FROM users WHERE user_name = ? AND user_pass = ?";
+        String sql = "SELECT COUNT(*) FROM users WHERE user_name = ? COLLATE utf8mb4_bin AND user_pass = ? COLLATE utf8mb4_bin";
 
         try (PreparedStatement preparedStatement = (PreparedStatement) con.prepareStatement(sql)) {
             preparedStatement.setString(1, user_name);

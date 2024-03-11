@@ -5,11 +5,15 @@
         <group>
             <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/gestioncourrier_design/formEnvoie.java</file>
             <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/gestioncourrier_design/formReception.java</file>
-            <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/gestioncourrier_design/connexion.java</file>
+            <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/classe/session.java</file>
+            <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/classe/user.java</file>
             <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/classe/courrier.java</file>
             <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/classe/client.java</file>
-            <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/gestioncourrier_design/formMain.java</file>
+            <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/classe/connexionbd.java</file>
+            <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/classe/exportPdf.java</file>
+            <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/classe/validConnexion.java</file>
             <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/classe/prixPoid.java</file>
+            <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/classe/idGenerator.java</file>
         </group>
     </open-files>
 </project-private>
