@@ -32,6 +32,9 @@ public final class formReception extends javax.swing.JInternalFrame {
      */
     public formReception() {
         initComponents();
+        numrecup.setVisible(false);
+        btnUpdate.setEnabled(false);
+        btnDelete.setEnabled(false);
         allDesactive();
     }
 
@@ -44,7 +47,7 @@ public final class formReception extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tabPanel = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -78,6 +81,9 @@ public final class formReception extends javax.swing.JInternalFrame {
         txtDestinataire = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         txtDateRecuperer = new com.toedter.calendar.JDateChooser();
+        numrecup = new javax.swing.JTextField();
+        btnUpdate = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableCourrierRecuperer = new javax.swing.JTable();
@@ -88,10 +94,10 @@ public final class formReception extends javax.swing.JInternalFrame {
 
         setPreferredSize(new java.awt.Dimension(240, 65));
 
-        jTabbedPane1.setBackground(new java.awt.Color(0, 0, 51));
-        jTabbedPane1.setForeground(new java.awt.Color(255, 255, 255));
-        jTabbedPane1.setFont(new java.awt.Font("Hack", 1, 16)); // NOI18N
-        jTabbedPane1.setOpaque(true);
+        tabPanel.setBackground(new java.awt.Color(0, 0, 51));
+        tabPanel.setForeground(new java.awt.Color(255, 255, 255));
+        tabPanel.setFont(new java.awt.Font("Hack", 1, 16)); // NOI18N
+        tabPanel.setOpaque(true);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -237,6 +243,34 @@ public final class formReception extends javax.swing.JInternalFrame {
         txtDateRecuperer.setForeground(new java.awt.Color(51, 51, 51));
         txtDateRecuperer.setFont(new java.awt.Font("Hack", 2, 13)); // NOI18N
 
+        numrecup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                numrecupActionPerformed(evt);
+            }
+        });
+
+        btnUpdate.setBackground(new java.awt.Color(0, 0, 51));
+        btnUpdate.setFont(new java.awt.Font("Hack", 1, 18)); // NOI18N
+        btnUpdate.setForeground(new java.awt.Color(255, 255, 255));
+        btnUpdate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/mettre-a-jour (1).png"))); // NOI18N
+        btnUpdate.setText("Modifier");
+        btnUpdate.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnUpdateMouseClicked(evt);
+            }
+        });
+
+        btnDelete.setBackground(new java.awt.Color(0, 0, 51));
+        btnDelete.setFont(new java.awt.Font("Hack", 1, 18)); // NOI18N
+        btnDelete.setForeground(new java.awt.Color(255, 255, 255));
+        btnDelete.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/delete-blanc.png"))); // NOI18N
+        btnDelete.setText("Supprimer");
+        btnDelete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDeleteMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -319,16 +353,23 @@ public final class formReception extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel13)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtNumPiece)))
-                        .addGap(76, 76, 76)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnValider)
+                        .addGap(64, 64, 64)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnDelete)
+                            .addComponent(btnUpdate)
                             .addComponent(btnAnnuler)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addComponent(jLabel7)
                         .addGap(29, 29, 29)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 725, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addContainerGap(42, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(277, 277, 277)
+                .addComponent(numrecup, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnValider)
+                .addGap(109, 109, 109))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jLabel3, jLabel6});
@@ -338,6 +379,8 @@ public final class formReception extends javax.swing.JInternalFrame {
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {cmbTypePiece, txtNom, txtPhone, txtPrenom});
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtDateEnvoie, txtDestinataire, txtDestination, txtExpediteur, txtProvenance, txtType});
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAnnuler, btnDelete, btnUpdate, btnValider});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -369,36 +412,46 @@ public final class formReception extends javax.swing.JInternalFrame {
                             .addComponent(jLabel11)
                             .addComponent(jLabel4)
                             .addComponent(txtDestinataire, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(40, 40, 40)
+                        .addGap(43, 43, 43)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(48, 48, 48)
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(txtDateRecuperer, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(numrecup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnValider, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel9)
+                        .addComponent(txtPrenom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel9)
-                                    .addComponent(txtPrenom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(3, 3, 3)
-                                .addComponent(btnValider, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(42, 42, 42)
-                                .addComponent(btnAnnuler))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(30, 30, 30)
+                                .addGap(30, 30, 30))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnUpdate)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel10)
                                     .addComponent(jLabel12)
                                     .addComponent(cmbTypePiece, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(35, 35, 35)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel13)
-                                    .addComponent(txtNumPiece, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addComponent(txtDateRecuperer, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(80, 80, 80))
+                                .addGap(35, 35, 35))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnDelete)
+                                .addGap(18, 18, 18)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(txtNumPiece, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAnnuler))))
+                .addGap(98, 98, 98))
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jLabel2, jLabel3, jLabel4, jLabel5, jLabel6});
@@ -409,7 +462,9 @@ public final class formReception extends javax.swing.JInternalFrame {
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {txtDateEnvoie, txtDestinataire, txtDestination, txtExpediteur, txtProvenance, txtType});
 
-        jTabbedPane1.addTab("Enregistrement de la recuperation d'un courrier", jPanel1);
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAnnuler, btnDelete, btnUpdate, btnValider});
+
+        tabPanel.addTab("Enregistrement de la recuperation d'un courrier", jPanel1);
 
         tableCourrierRecuperer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -419,6 +474,11 @@ public final class formReception extends javax.swing.JInternalFrame {
                 "Num courrier", "Type", "Date envoie", "Provenance", "Destination", "Expediteur", "Destinataire", "Date recuperation", "Recuperateur"
             }
         ));
+        tableCourrierRecuperer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableCourrierRecupererMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableCourrierRecuperer);
         if (tableCourrierRecuperer.getColumnModel().getColumnCount() > 0) {
             tableCourrierRecuperer.getColumnModel().getColumn(0).setPreferredWidth(20);
@@ -523,12 +583,12 @@ public final class formReception extends javax.swing.JInternalFrame {
                     .addComponent(btnSupprimer)
                     .addComponent(btnActualiser)
                     .addComponent(btnExporter, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addContainerGap(135, Short.MAX_VALUE))
         );
 
         jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnActualiser, btnExporter, btnModifier, btnSupprimer});
 
-        jTabbedPane1.addTab("Liste des courriers recuperer", jPanel2);
+        tabPanel.addTab("Liste des courriers recuperer", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -536,13 +596,13 @@ public final class formReception extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1080, Short.MAX_VALUE))
+                .addComponent(tabPanel))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1))
+                .addComponent(tabPanel))
         );
 
         pack();
@@ -574,23 +634,7 @@ public final class formReception extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSupprimerMouseClicked
 
     private void btnModifierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModifierMouseClicked
-        //        DefaultTableModel tm = (DefaultTableModel) tableCourrier.getModel();
-        //
-        //        String code = (String) tableCourrier.getValueAt(tableCourrier.getSelectedRow(), 1).toString();
-        //        String libelle = (String) tableCourrier.getValueAt(tableCourrier.getSelectedRow(), 2).toString();
-        //        try {
-        //
-        //            Article.modifier(code, libelle);
-        //            tm.setRowCount(0);
-        //            Article.actualiser(tm);
-        //            if (tableCourrier.getRowCount() != 0) {
-        //                btnImprimer.setEnabled(true);
-        //                btnSupprimer.setEnabled(false);
-        //                btnModifier.setEnabled(false);
-        //            }
-        //        } catch (SQLException | ClassNotFoundException ex) {
-        //            Logger.getLogger(formArticle.class.getName()).log(Level.SEVERE, null, ex);
-        //        }
+
     }//GEN-LAST:event_btnModifierMouseClicked
 
     private void btnModifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifierActionPerformed
@@ -675,17 +719,17 @@ public final class formReception extends javax.swing.JInternalFrame {
         try {
             String[] result = courrier.rechercheColis(txtNumRech.getText());
             switch (result.length) {
-                case 1:
+                case 1 -> {
                     JOptionPane.showMessageDialog(null, "Colis Deja recuperer!");
                     allClear();
                     allDesactive();
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     JOptionPane.showMessageDialog(null, "Colis mon trouver!");
                     allClear();
                     allDesactive();
-                    break;
-                default:
+                }
+                default -> {
                     txtType.setText(result[0]);
                     txtDateEnvoie.setText(result[1]);
                     txtProvenance.setText(result[2]);
@@ -694,7 +738,7 @@ public final class formReception extends javax.swing.JInternalFrame {
                     txtDestinataire.setText(result[5]);
                     allActive();
                     txtDateRecuperer.requestFocus();
-                    break;
+                }
             }
 
         } catch (ClassNotFoundException | SQLException ex) {
@@ -716,6 +760,121 @@ public final class formReception extends javax.swing.JInternalFrame {
         exportPdf.exportTableToPdf(tableCourrierRecuperer, directoryPath + fileName);
     }//GEN-LAST:event_btnExporterMouseClicked
 
+    private void tableCourrierRecupererMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableCourrierRecupererMouseClicked
+
+        DefaultTableModel dtm = (DefaultTableModel) tableCourrierRecuperer.getModel();
+        int tIndex = tableCourrierRecuperer.getSelectedRow();
+        txtNumRech.setText(dtm.getValueAt(tIndex, 0).toString());
+
+        try {
+            if (null == courrier.rechercheColisToupdate(txtNumRech.getText())) {
+                JOptionPane.showMessageDialog(null, "<html> Il y a un probleme <br> Veillez contactez l'administrateur!</html>");
+            } else {
+
+                String[] result;
+                result = courrier.rechercheColisToupdate(txtNumRech.getText());
+
+                txtType.setText(result[0]);
+                txtDateEnvoie.setText(result[1]);
+                txtProvenance.setText(result[2]);
+                txtDestination.setText(result[3]);
+                txtExpediteur.setText(result[4]);
+                txtDestinataire.setText(result[5]);
+                txtDateRecuperer.setDate(null);
+                numrecup.setText(result[6]);
+                txtNom.setText(result[7]);
+                txtPrenom.setText(result[8]);
+                txtPhone.setText(result[9]);
+                if ("CNIB".equals(result[10])) {
+                    cmbTypePiece.setSelectedIndex(0);
+                } else {
+                    cmbTypePiece.setSelectedIndex(1);
+                }
+                txtNumPiece.setText(result[11]);
+
+                allActive();
+                txtNumRech.setEnabled(false);
+                tabPanel.setSelectedComponent(jPanel1);
+                btnUpdate.setEnabled(true);
+                btnDelete.setEnabled(true);
+                btnValider.setEnabled(false);
+                btnRecherche.setEnabled(false);
+                btnRecherche.enable(false);
+                tabPanel.setSelectedComponent(jPanel1);
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(formEnvoie.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tableCourrierRecupererMouseClicked
+
+    private void numrecupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numrecupActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_numrecupActionPerformed
+
+    private void btnDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDeleteMouseClicked
+        try {
+            if (JOptionPane.showConfirmDialog(null, "Voulez-vous vraiment effectuer la suppresion [ ", "Confirmation", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                courrier.ModiferCourrierReception(txtNumRech.getText());
+                client.supprimerClient(numrecup.getText());
+
+                allDesactive();
+                allClear();
+                btnDelete.setEnabled(false);
+                btnUpdate.setEnabled(false);
+            }
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(FormUtilisateur.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnDeleteMouseClicked
+
+    private void btnUpdateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUpdateMouseClicked
+        if (txtDateRecuperer.getDate() == null) {
+            JOptionPane.showMessageDialog(rootPane, "La date de retrait du courrier ne peux pas etre vie !", "System Info", JOptionPane.WARNING_MESSAGE);
+            txtDateRecuperer.requestFocus();
+        } else if (txtNom.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Le nom du recuperateur ne pas etre vie !", "System Info", JOptionPane.WARNING_MESSAGE);
+            txtNom.requestFocus();
+        } else if (txtPrenom.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Le prenom du recuperateur ne peux pas etre vie !", "System Info", JOptionPane.WARNING_MESSAGE);
+            txtPrenom.requestFocus();
+        } else if (txtPhone.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Le numero de telephone ne peux pas etre vie !", "System Info", JOptionPane.WARNING_MESSAGE);
+            txtPhone.requestFocus();
+        } else if (txtNumPiece.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Le numero de la piece ne peux pas etre vie !", "System Info", JOptionPane.WARNING_MESSAGE);
+            txtNumPiece.requestFocus();
+        } else {
+            String numRecuperateur = numrecup.getText();
+            String numCourrier = txtNumRech.getText();
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy"); // creation d'un formatage de date
+            String dateRetrait = dateFormat.format(txtDateRecuperer.getDate()); // formatage de la date et conversion et String
+            String nom = txtNom.getText();
+            String prenom = txtPrenom.getText();
+            String phone = txtPhone.getText();
+            String typePiece = (String) cmbTypePiece.getSelectedItem();
+            String numpiece = txtNumPiece.getText();
+
+            try {
+                //            Envoie des donner dans la Data base
+                courrier.validRetraisColis(numCourrier, dateRetrait, numRecuperateur);
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(formReception.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            try {
+                client.ModifierClient(numRecuperateur, nom, prenom, phone, typePiece, numpiece);
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(formReception.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            JOptionPane.showMessageDialog(null, "Modification effectuer Effectuer!");
+            allClear();
+            allDesactive();
+
+        }
+
+    }//GEN-LAST:event_btnUpdateMouseClicked
+
     /**
      * Fonction pour desactiver les champs de saisie et les bouttons de controle
      */
@@ -728,6 +887,10 @@ public final class formReception extends javax.swing.JInternalFrame {
         txtNumPiece.enable(false);
         btnAnnuler.enable(false);
         btnValider.enable(false);
+        btnUpdate.setEnabled(false);
+        btnDelete.setEnabled(false);
+        txtNumRech.setEnabled(true);
+        btnRecherche.setEnabled(true);
 
     }
 
@@ -763,14 +926,19 @@ public final class formReception extends javax.swing.JInternalFrame {
         txtPhone.setText(null);
         cmbTypePiece.setSelectedIndex(0);
         txtNumPiece.setText(null);
+        numrecup.setText(null);
+        btnValider.setEnabled(true);
+        btnRecherche.setEnabled(true);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualiser;
     private javax.swing.JButton btnAnnuler;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnExporter;
     private javax.swing.JButton btnModifier;
     private javax.swing.JButton btnRecherche;
     private javax.swing.JButton btnSupprimer;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnValider;
     private javax.swing.JComboBox<String> cmbTypePiece;
     private javax.swing.JLabel jLabel1;
@@ -792,7 +960,8 @@ public final class formReception extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField numrecup;
+    private javax.swing.JTabbedPane tabPanel;
     private javax.swing.JTable tableCourrierRecuperer;
     private javax.swing.JTextField txtDateEnvoie;
     private com.toedter.calendar.JDateChooser txtDateRecuperer;

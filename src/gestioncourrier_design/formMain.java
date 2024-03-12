@@ -175,6 +175,11 @@ public class formMain extends javax.swing.JFrame {
         btnStatistiq.setText("Statistiques");
         btnStatistiq.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnStatistiq.setFocusTraversalPolicyProvider(true);
+        btnStatistiq.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnStatistiqMouseClicked(evt);
+            }
+        });
 
         jSeparator5.setBackground(new java.awt.Color(0, 0, 51));
         jSeparator5.setForeground(new java.awt.Color(255, 255, 255));
@@ -402,6 +407,21 @@ public class formMain extends javax.swing.JFrame {
         btnreception.setEnabled(true);
         btnenvoie.setEnabled(true);
     }//GEN-LAST:event_btnAdminMouseClicked
+
+    private void btnStatistiqMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnStatistiqMouseClicked
+        mPam.removeAll();// Supsresion du contenu de la page mPam
+        mPam.repaint(); // Reactualisation de la page
+
+        FormStatistique fenetre = new FormStatistique(); // instanciation de la femetre de gestion
+        fenetre.setSize(mPam.getWidth(), mPam.getHeight());
+        fenetre.setVisible(true);
+
+        mPam.add(fenetre); // affectation de la page de gestion a mPam
+//        fenetre.moveToFront();
+        btnAdmin.setEnabled(false);
+        btnreception.setEnabled(true);
+        btnenvoie.setEnabled(true);
+    }//GEN-LAST:event_btnStatistiqMouseClicked
 
     /**
      * @param args the command line arguments

@@ -21,6 +21,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class courrier {
 
+    //fonction pour l'envoie de colis
     public static void validerCourrier(String num_courrier, String type_courrier, String poid_courrier, String provenance, String destination, String prix_factuer, String date_depo, String num_expediteur, String num_destinateur) throws ClassNotFoundException, SQLException {
 
         Connection con = connexionbd.seconnecter(); // Creation d'une connexion
@@ -87,38 +88,6 @@ public class courrier {
     }
 
     @SuppressWarnings("empty-statement")
-    public static String[] rechercheColis(String uniq_id) throws ClassNotFoundException, SQLException {
-        Connection con = connexionbd.seconnecter();
-        // Utilisez des requêtes paramétrées pour éviter les injections SQL
-        String sql = "SELECT c.type_courrier, c.date_envoie_courrier, c.provenance_courrier, c.destination_courrier, status_courrier, concat( e.nom_client ,' ', e.prenom_client) AS Expediteur, "
-                + "CONCAT( d.nom_client ,' ', d.prenom_client) AS Destinateur from courriers c INNER JOIN clients e ON c.num_expediteur_courrier = e.num_client INNER JOIN clients d ON c.num_destinateur_courrier = d.num_client WHERE num_courrier = ?;";
-
-        try (PreparedStatement preparedStatement = (PreparedStatement) con.prepareStatement(sql)) {
-            preparedStatement.setString(1, uniq_id);
-
-            try (ResultSet res = preparedStatement.executeQuery()) {
-                if (res.next()) {
-                    String[] rslt = {res.getString("c.type_courrier"),
-                        res.getString("c.date_envoie_courrier"),
-                        res.getString("c.provenance_courrier"),
-                        res.getString("c.destination_courrier"),
-                        res.getString("Expediteur"),
-                        res.getString("Destinateur")};
-                    if ("RECUPERER".equals(res.getString("status_courrier"))) {
-                        String[] vrslt = {"Vide"};
-                        return vrslt;
-                    } else {
-                        return rslt;
-                    }
-                }
-            }
-        }
-        String[] videMessage = {"colis", "Introuvable"};
-        return videMessage;
-
-    }
-
-    @SuppressWarnings("empty-statement")
     public static String[] rechercheOneColis(String uniq_id) throws ClassNotFoundException, SQLException {
         Connection con = connexionbd.seconnecter();
         // Utilisez des requêtes paramétrées pour éviter les injections SQL
@@ -159,13 +128,87 @@ public class courrier {
 
     }
 
+    /*
+
+    ******* function pour la reception de colis
+
+     */
+    @SuppressWarnings("empty-statement")
+    public static String[] rechercheColis(String uniq_id) throws ClassNotFoundException, SQLException {
+        Connection con = connexionbd.seconnecter();
+        // Utilisez des requêtes paramétrées pour éviter les injections SQL
+        String sql = "SELECT c.type_courrier, c.date_envoie_courrier, c.provenance_courrier, c.destination_courrier, status_courrier, concat( e.nom_client ,' ', e.prenom_client) AS Expediteur, "
+                + "CONCAT( d.nom_client ,' ', d.prenom_client) AS Destinateur from courriers c INNER JOIN clients e ON c.num_expediteur_courrier = e.num_client INNER JOIN clients d ON c.num_destinateur_courrier = d.num_client WHERE num_courrier = ?;";
+
+        try (PreparedStatement preparedStatement = (PreparedStatement) con.prepareStatement(sql)) {
+            preparedStatement.setString(1, uniq_id);
+
+            try (ResultSet res = preparedStatement.executeQuery()) {
+                if (res.next()) {
+                    String[] rslt = {res.getString("c.type_courrier"),
+                        res.getString("c.date_envoie_courrier"),
+                        res.getString("c.provenance_courrier"),
+                        res.getString("c.destination_courrier"),
+                        res.getString("Expediteur"),
+                        res.getString("Destinateur")};
+                    if ("RECUPERER".equals(res.getString("status_courrier"))) {
+                        String[] vrslt = {"Vide"};
+                        return vrslt;
+                    } else {
+                        return rslt;
+                    }
+                }
+            }
+        }
+        String[] videMessage = {"colis", "Introuvable"};
+        return videMessage;
+
+    }
+
+    @SuppressWarnings("empty-statement")
+    public static String[] rechercheColisToupdate(String uniq_id) throws ClassNotFoundException, SQLException {
+        Connection con = connexionbd.seconnecter();
+        // Utilisez des requêtes paramétrées pour éviter les injections SQL
+        String sql;
+        sql = "SELECT c.type_courrier, c.date_envoie_courrier, c.provenance_courrier, c.destination_courrier, c.date_recuperer_courrier, status_courrier, concat( e.nom_client ,' ', e.prenom_client) AS Expediteur, "
+                + "CONCAT( d.nom_client ,' ', d.prenom_client) AS Destinateur, r.num_client, r.nom_client, r.prenom_client, r.phone_client, r.type_piece_client, r.num_piece_client  "
+                + "from courriers c INNER JOIN clients e ON c.num_expediteur_courrier = e.num_client INNER JOIN clients d ON c.num_destinateur_courrier = d.num_client INNER JOIN clients r ON c.num_recuperateur_courrier = r.num_client WHERE num_courrier = ?;";
+
+        try (PreparedStatement preparedStatement = (PreparedStatement) con.prepareStatement(sql)) {
+            preparedStatement.setString(1, uniq_id);
+
+            try (ResultSet res = preparedStatement.executeQuery()) {
+                if (res.next()) {
+                    String[] rslt = {res.getString("c.type_courrier"),
+                        res.getString("c.date_envoie_courrier"),
+                        res.getString("c.provenance_courrier"),
+                        res.getString("c.destination_courrier"),
+                        res.getString("Expediteur"),
+                        res.getString("Destinateur"),
+                        res.getString("r.num_client"),
+                        res.getString("r.nom_client"),
+                        res.getString("r.prenom_client"),
+                        res.getString("r.phone_client"),
+                        res.getString("r.type_piece_client"),
+                        res.getString("r.num_piece_client")};
+
+                    return rslt;
+
+                }
+            }
+        }
+
+        return null;
+
+    }
+
     public static void validRetraisColis(String num_courrier, String date_recuperer, String num_recuperateur) throws ClassNotFoundException, SQLException {
         Connection con = connexionbd.seconnecter(); // Creation d'une connexion
         String insertQuery = "UPDATE courriers SET num_recuperateur_courrier = ?, date_recuperer_courrier = ?, status_courrier= ? WHERE num_courrier = ? ";
         PreparedStatement insertStatement = (PreparedStatement) con.prepareStatement(insertQuery);
         insertStatement.setString(1, num_recuperateur);
         insertStatement.setString(2, date_recuperer);
-        insertStatement.setString(3, "RECUPERER");
+        insertStatement.setString(3, "NON RECUPERER");
         insertStatement.setString(4, num_courrier);
 
         insertStatement.executeUpdate();
@@ -193,6 +236,19 @@ public class courrier {
 
         }
 
+    }
+
+    public static void ModiferCourrierReception(String num_courrier) throws ClassNotFoundException, SQLException {
+
+        Connection con = connexionbd.seconnecter(); // Creation d'une connexion
+        String note = "Not presence";
+        String insertQuery = "UPDATE courriers SET num_recuperateur_courrier = ?, date_recuperer_courrier = ?, status_courrier= ?   WHERE num_courrier = ?;";
+        PreparedStatement insertStatement = (PreparedStatement) con.prepareStatement(insertQuery);
+        insertStatement.setString(1, note);
+        insertStatement.setString(2, note);
+        insertStatement.setString(3, "RECUPERER");
+        insertStatement.setString(4, num_courrier);
+        insertStatement.executeUpdate();
     }
 
 }
