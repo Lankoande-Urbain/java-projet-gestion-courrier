@@ -2,19 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/gestioncourrier_design/formEnvoie.java</file>
-            <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/gestioncourrier_design/FormStatistique.java</file>
-            <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/gestioncourrier_design/formReception.java</file>
-            <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/classe/session.java</file>
-            <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/classe/user.java</file>
-            <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/classe/courrier.java</file>
-            <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/classe/client.java</file>
-            <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/classe/connexionbd.java</file>
-            <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/classe/exportPdf.java</file>
-            <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/classe/validConnexion.java</file>
-            <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/classe/prixPoid.java</file>
-            <file>file:/home/lankoande/Bureau/Prog/GestionCourrier/src/classe/idGenerator.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

@@ -47,10 +47,8 @@ public class formParmPrixKg extends javax.swing.JPanel {
         setBackground(new java.awt.Color(255, 255, 255));
 
         labActu.setFont(new java.awt.Font("Hack", 1, 17)); // NOI18N
-        labActu.setForeground(new java.awt.Color(0, 0, 0));
 
         jLabel2.setFont(new java.awt.Font("Hack", 1, 17)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Nouvelle valeur:");
 
         btnValider.setBackground(new java.awt.Color(0, 0, 51));
@@ -64,7 +62,11 @@ public class formParmPrixKg extends javax.swing.JPanel {
             }
         });
 
-        txtNewVal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(java.text.NumberFormat.getIntegerInstance())));
+        try {
+            txtNewVal.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         jLabel1.setFont(new java.awt.Font("Hack", 1, 27)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 51));
@@ -92,15 +94,14 @@ public class formParmPrixKg extends javax.swing.JPanel {
                         .addGap(71, 71, 71)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labActu, javax.swing.GroupLayout.PREFERRED_SIZE, 604, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(26, 26, 26)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtNewVal, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(175, 175, 175)
-                                    .addComponent(btnValider, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNewVal, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(175, 175, 175)
+                                .addComponent(btnValider, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(29, 29, 29))
         );
         layout.setVerticalGroup(
@@ -133,7 +134,7 @@ public class formParmPrixKg extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "le champ ne peux pas etre vide !");
             txtNewVal.requestFocus();
         } else {
-            Float nbr = Float.valueOf(txtNewVal.getText());
+            Float nbr = Float.parseFloat(txtNewVal.getText());
             try {
                 prixPoid.updatePrixPoid(nbr);
             } catch (ClassNotFoundException | SQLException ex) {

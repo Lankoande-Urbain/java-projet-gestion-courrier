@@ -1,0 +1,4 @@
+Data Base name: Gestion_courrier
+
+User admin / [ login: lankoande; password: PrinceAdmin ]
+User non admin / [ login: admin; password: admin ]

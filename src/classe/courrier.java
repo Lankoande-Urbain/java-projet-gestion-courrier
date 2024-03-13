@@ -251,4 +251,42 @@ public class courrier {
         insertStatement.executeUpdate();
     }
 
+    
+     public static Float getSomme() throws SQLException, ClassNotFoundException { // Recuperation du prix/poids dans la BD
+
+        Float rslt = null;
+
+        Connection con = connexionbd.seconnecter();
+        // Utilisez des requêtes paramétrées pour éviter les injections SQL
+        String sql = "SELECT SUM(prix_facturer_courrier) AS somme FROM courriers ;";
+
+        try (PreparedStatement preparedStatement = (PreparedStatement) con.prepareStatement(sql)) {
+            try (ResultSet res = preparedStatement.executeQuery()) {
+                if (res.next()) {
+                    
+                    rslt = res.getFloat("somme");
+                }
+            }
+        }
+        return rslt;
+    }
+     
+     public static int getCompt() throws SQLException, ClassNotFoundException { // Recuperation du prix/poids dans la BD
+
+        int rslt =0;
+
+        Connection con = connexionbd.seconnecter();
+        // Utilisez des requêtes paramétrées pour éviter les injections SQL
+        String sql = "SELECT COUNT(num_courrier) AS somme FROM courriers ;";
+
+        try (PreparedStatement preparedStatement = (PreparedStatement) con.prepareStatement(sql)) {
+            try (ResultSet res = preparedStatement.executeQuery()) {
+                if (res.next()) {
+                    
+                    rslt = res.getInt("somme");
+                }
+            }
+        }
+        return rslt;
+    }
 }

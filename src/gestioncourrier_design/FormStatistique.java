@@ -4,11 +4,15 @@
  */
 package gestioncourrier_design;
 
-import java.awt.BorderLayout;
+
+import classe.connexionbd;
+import classe.courrier;
+import com.mysql.jdbc.Statement;
+import java.sql.ResultSet;
 import java.awt.Color;
-import javax.swing.JFrame;
+import java.sql.SQLException;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
+import org.jfree.chart.ChartFrame;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
@@ -22,9 +26,14 @@ public class FormStatistique extends javax.swing.JPanel {
 
     /**
      * Creates new form FormStatistique
+     * @throws java.sql.SQLException
+     * @throws java.lang.ClassNotFoundException
      */
-    public FormStatistique() {
+    public FormStatistique() throws SQLException, ClassNotFoundException {
         initComponents();
+        
+        labsomme.setText("Chiffre d'affaire:   " + String.valueOf(courrier.getSomme()) + "  frans CFA");
+        labcompt.setText("Le nombre de courrier total est:   " + String.valueOf(courrier.getCompt()) + " Colis" );
     }
 
     /**
@@ -36,70 +45,240 @@ public class FormStatistique extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
+        labsomme = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        panel = new javax.swing.JPanel();
+        btnAnnee = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        labcompt = new javax.swing.JLabel();
+        btnCourbe = new javax.swing.JButton();
 
-        jButton1.setText("jButton1");
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+
+        jPanel2.setBackground(new java.awt.Color(0, 0, 51));
+        jPanel2.setForeground(new java.awt.Color(255, 255, 255));
+
+        labsomme.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
+        labsomme.setForeground(new java.awt.Color(255, 255, 255));
+        labsomme.setText("jLabel1");
+
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton1.setText("Detaille par date");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
             }
         });
 
-        panel.setBackground(new java.awt.Color(0, 0, 51));
-        panel.setLayout(new java.awt.BorderLayout());
+        btnAnnee.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnAnnee.setText("Detaille par Annee");
+        btnAnnee.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAnneeMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(148, 148, 148)
+                .addComponent(btnAnnee)
+                .addGap(174, 174, 174))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addComponent(labsomme, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btnAnnee, jButton1});
+
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addComponent(labsomme)
+                .addGap(74, 74, 74)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAnnee)
+                    .addComponent(jButton1))
+                .addGap(27, 27, 27))
+        );
+
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnAnnee, jButton1});
+
+        jPanel3.setBackground(new java.awt.Color(51, 0, 51));
+        jPanel3.setForeground(new java.awt.Color(255, 255, 255));
+
+        labcompt.setFont(new java.awt.Font("Segoe UI", 3, 24)); // NOI18N
+        labcompt.setForeground(new java.awt.Color(255, 255, 255));
+        labcompt.setText("jLabel1");
+
+        btnCourbe.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnCourbe.setText("Detaille");
+        btnCourbe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCourbeMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(37, Short.MAX_VALUE)
+                .addComponent(labcompt, javax.swing.GroupLayout.PREFERRED_SIZE, 488, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(170, 170, 170)
+                .addComponent(btnCourbe, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(labcompt)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 75, Short.MAX_VALUE)
+                .addComponent(btnCourbe)
+                .addGap(18, 18, 18))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(170, 170, 170)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(479, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(284, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addContainerGap(867, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 444, Short.MAX_VALUE)
-                .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        dataset.setValue(80, " Marks", "Student1");
-        dataset.setValue(50, " Marks", "Student2");
-        dataset.setValue(75, " Marks", "Student3");
-        dataset.setValue(90, " Marks", "Student4");
-        dataset.setValue(95, " Marks", "Student5");
-        JFreeChart chart = ChartFactory.createBarChart("Student Score ", "Student Name", " Marks", dataset, PlotOrientation.VERTICAL, false, true, false);
-        CategoryPlot p = chart.getCategoryPlot();
-
-        p.setRangeGridlinePaint(Color.black);
-
-        // Create a new JFrame to display the chart
-        JFrame frame = new JFrame("Church Contribution");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout(0, 5));
-
-        // Add the chart to the frame
-        ChartPanel chartPanel = new ChartPanel(barChart);
-        frame.add(chartPanel, BorderLayout.CENTER);
-
-        // Display the frame
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        try (java.sql.Connection con = connexionbd.seconnecter()) {
+            Statement stmt = (Statement) con.createStatement();
+            String sql = "SELECT date_envoie_courrier AS date, SUM(prix_facturer_courrier) AS prix FROM courriers GROUP BY date_envoie_courrier;";
+            ResultSet res = stmt.executeQuery(sql);
+            while (res.next()) {
+                System.out.println("Date: " + res.getString("date") + ", Prix: " + res.getFloat("prix")); // Ajout d'une instruction d'impression
+                dataset.setValue(res.getFloat("prix"), " Prix", res.getString("date"));
+            }
+            JFreeChart chart = ChartFactory.createBarChart("Somme ", " Date", " Prix", dataset, PlotOrientation.VERTICAL, false, true, false);
+            CategoryPlot p = chart.getCategoryPlot();
+            p.setRangeGridlinePaint(Color.blue);
+            ChartFrame frame = new ChartFrame("Chiffre d'affaire", chart);
+            frame.pack(); // Ajout de l'initialisation de la fenêtre du graphique
+            frame.setVisible(true);
+            frame.pack();
+            frame.setLocationRelativeTo(null);
+            frame.setSize(450, 350);
+        } catch (ClassNotFoundException | SQLException ex) {
+            // Ajout de l'impression de l'exception
+            
+        }
+       
     }//GEN-LAST:event_jButton1MouseClicked
 
+    private void btnAnneeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAnneeMouseClicked
+       DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+try (java.sql.Connection con = connexionbd.seconnecter()) {
+    Statement stmt = (Statement) con.createStatement();
+    // Utilisez STR_TO_DATE pour convertir la chaîne en date, puis YEAR pour extraire l'année
+    String sql = "SELECT YEAR(STR_TO_DATE(date_envoie_courrier, '%d/%m/%Y')) AS year, SUM(prix_facturer_courrier) AS prix FROM courriers GROUP BY YEAR(STR_TO_DATE(date_envoie_courrier, '%d/%m/%Y'));";
+    ResultSet res = stmt.executeQuery(sql);
+    while (res.next()) {
+        System.out.println("Year: " + res.getInt("year") + ", Prix: " + res.getFloat("prix")); // Ajout d'une instruction d'impression
+        dataset.setValue(res.getFloat("prix"), " Prix", res.getString("year")); // Convertit le float en double
+    }
+    JFreeChart chart = ChartFactory.createBarChart("Somme ", " Année", " Prix", dataset, PlotOrientation.VERTICAL, false, true, false);
+    CategoryPlot p = chart.getCategoryPlot();
+    p.setRangeGridlinePaint(Color.blue);
+    ChartFrame frame = new ChartFrame("Chiffre d'affaire", chart);
+    frame.pack(); // Ajout de l'initialisation de la fenêtre du graphique
+    frame.setVisible(true);
+    frame.pack();
+    frame.setLocationRelativeTo(null);
+    frame.setSize(450, 350);
+} catch (ClassNotFoundException | SQLException ex) {
+           // Ajout de l'impression de l'exception
+           
+}
+
+    }//GEN-LAST:event_btnAnneeMouseClicked
+
+    private void btnCourbeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCourbeMouseClicked
+       DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+try (java.sql.Connection con = connexionbd.seconnecter()) {
+    Statement stmt = (Statement) con.createStatement();
+    // Utilisez COUNT pour compter le nombre de courriers uniques
+    String sql = "SELECT date_envoie_courrier AS year, COUNT(num_courrier) AS count FROM courriers GROUP BY date_envoie_courrier;";
+    ResultSet res = stmt.executeQuery(sql);
+    while (res.next()) {
+        System.out.println("Year: " + res.getInt("year") + ", Count: " + res.getInt("count")); // Ajout d'une instruction d'impression
+        dataset.setValue(res.getInt("count"), " Count", res.getString("year")); // Convertit le float en double
+    }
+    JFreeChart chart = ChartFactory.createLineChart("Nombre de courriers ", " Année", " Count", dataset, PlotOrientation.VERTICAL, false, true, false);
+    CategoryPlot p = chart.getCategoryPlot();
+    p.setRangeGridlinePaint(Color.blue);
+    ChartFrame frame = new ChartFrame("Courier envoyer par jour", chart);
+    frame.pack(); // Ajout de l'initialisation de la fenêtre du graphique
+    frame.setVisible(true);
+    frame.pack();
+    frame.setLocationRelativeTo(null);
+    frame.setSize(450, 350);
+} catch (ClassNotFoundException | SQLException ex) {
+           // Ajout de l'impression de l'exception
+           
+}
+
+    }//GEN-LAST:event_btnCourbeMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAnnee;
+    private javax.swing.JButton btnCourbe;
     private javax.swing.JButton jButton1;
-    private javax.swing.JPanel panel;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel labcompt;
+    private javax.swing.JLabel labsomme;
     // End of variables declaration//GEN-END:variables
 }
